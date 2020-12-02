@@ -1,7 +1,7 @@
 #! /bin/env python3
 
 def main():
-    with open("input.txt") as f:
+    with open("test.txt") as f:
         count = 0
         for line in f.readlines():
             line = line.rstrip()

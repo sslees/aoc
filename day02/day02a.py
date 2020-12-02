@@ -1,7 +1,5 @@
 #! /bin/env python3
 
-import itertools
-
 def main():
     with open("input.txt") as f:
         count = 0
