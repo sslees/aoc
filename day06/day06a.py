@@ -1,5 +1,6 @@
 #! /bin/env python3
 
+
 def main():
     with open("test.txt") as f:
         d = [l.strip() for l in f.readlines()]

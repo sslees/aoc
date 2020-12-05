@@ -1,5 +1,6 @@
 #! /bin/env python3
 
+
 def main():
     dx = 3
     dy = 1
@@ -11,12 +12,13 @@ def main():
     my = len(m)
     count = 0
     while y < my:
-        if m[y][x] == '#':
+        if m[y][x] == "#":
             count += 1
         x += dx
         x = x % mx
         y += dy
     print(count)
+
 
 if __name__ == "__main__":
     main()

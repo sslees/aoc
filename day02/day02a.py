@@ -1,5 +1,6 @@
 #! /bin/env python3
 
+
 def main():
     with open("input.txt") as f:
         count = 0
@@ -11,6 +12,7 @@ def main():
             if int(low) <= passwd.count(letter) <= int(high):
                 count += 1
     print(count)
+
 
 if __name__ == "__main__":
     main()

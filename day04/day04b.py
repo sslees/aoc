@@ -2,6 +2,7 @@
 
 import re
 
+
 def valid(p):
     byr = re.search(r"(?:^|\s+)byr:(\d{4})(?:$|\s+)", p)
     iyr = re.search(r"(?:^|\s+)iyr:(\d{4})(?:$|\s+)", p)

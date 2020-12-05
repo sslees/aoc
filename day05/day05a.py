@@ -1,8 +1,9 @@
 #! /bin/env python3
 
+
 def id(code):
-    row = int(code[0:7].replace('F', '0').replace('B', '1'), 2)
-    col = int(code[7:10].replace('L', '0').replace('R', '1'), 2)
+    row = int(code[0:7].replace("F", "0").replace("B", "1"), 2)
+    col = int(code[7:10].replace("L", "0").replace("R", "1"), 2)
     return row * 8 + col
 
 
