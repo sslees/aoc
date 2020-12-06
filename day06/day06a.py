@@ -2,10 +2,16 @@
 
 
 def main():
-    with open("test.txt") as f:
-        d = [l.strip() for l in f.readlines()]
-    for l in d:
-        print(l)
+    with open("input.txt") as f:
+        groups = f.read().split("\n\n")
+    s = 0
+    for g in groups:
+        qs = set()
+        for p in g.split("\n"):
+            for q in p:
+                qs.add(q)
+        s += len(qs)
+    print(s)
 
 
 if __name__ == "__main__":
