@@ -1,11 +1,21 @@
 #! /bin/env python3
 
 
+import itertools
+
+
 def main():
-    with open("test.txt") as f:
-        d = [l.strip() for l in f.readlines()]
-    for l in d:
-        print(l)
+    with open("input.txt") as f:
+        d = [int(l.strip()) for l in f.readlines()]
+    pre = 25
+    for i in range(pre, len(d)):
+        if not any(
+            [
+                a != b and a + b == d[i]
+                for a, b in itertools.combinations(d[i - pre : i], 2)
+            ]
+        ):
+            print(d[i])
 
 
 if __name__ == "__main__":
