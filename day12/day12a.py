@@ -2,10 +2,36 @@
 
 
 def main():
-    with open("test.txt") as f:
-        d = [l.strip() for l in f.readlines()]
-    for l in d:
-        print(l)
+    with open("input.txt") as f:
+        lines = [l.strip() for l in f.readlines()]
+    x, y = 0, 0
+    d = 0
+    for l in lines:
+        cmd, val = l[0], int(l[1:])
+        if cmd == "N":
+            y += val
+        if cmd == "S":
+            y -= val
+        if cmd == "E":
+            x += val
+        if cmd == "W":
+            x -= val
+        if cmd == "L":
+            d += val
+            d = (d + 360) % 360
+        if cmd == "R":
+            d -= val
+            d = (d + 360) % 360
+        if cmd == "F":
+            if d == 0:
+                x += val
+            elif d == 90:
+                y += val
+            elif d == 180:
+                x -= val
+            elif d == 270:
+                y -= val
+    print(abs(x) + abs(y))
 
 
 if __name__ == "__main__":
