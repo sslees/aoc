@@ -2,7 +2,7 @@
 
 
 def ore(recipes, extras, units, recipe):
-    if recipe == 'ORE':
+    if recipe == "ORE":
 
         return units
     if recipe in extras:
@@ -20,16 +20,16 @@ def ore(recipes, extras, units, recipe):
 
 def main():
     recipes = {}
-    with open('input.txt') as f:
+    with open("input.txt") as f:
         for l in f.readlines():
-            inputs, output = l.split(' => ')
+            inputs, output = l.split(" => ")
             increment, recipe = output.split()
             recipes[recipe] = (
                 int(increment),
-                [(int(i.split()[0]), i.split()[1]) for i in inputs.split(', ')]
+                [(int(i.split()[0]), i.split()[1]) for i in inputs.split(", ")],
             )
-    print(ore(recipes, {}, 1, 'FUEL'))
+    print(ore(recipes, {}, 1, "FUEL"))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

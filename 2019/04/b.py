@@ -5,9 +5,11 @@ def check(s):
     adjacent = False
     ascending = True
     for i in range(5):
-        if s[i] == s[i + 1] and \
-                (i < 1 or s[i] != s[i - 1]) and \
-                (i > 3 or s[i] != s[i + 2]):
+        if (
+            s[i] == s[i + 1]
+            and (i < 1 or s[i] != s[i - 1])
+            and (i > 3 or s[i] != s[i + 2])
+        ):
             adjacent = True
             break
     for i in range(5):

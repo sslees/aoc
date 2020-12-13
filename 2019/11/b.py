@@ -38,13 +38,13 @@ def move(x, y, direction, val):
 
 def main():
     pointer, base = 0, 0
-    with open('input.txt') as f:
-        memory = list(map(int, f.readline().split(',')))
+    with open("input.txt") as f:
+        memory = list(map(int, f.readline().split(",")))
     memory.extend([0] * len(memory) * 10)
     grid, x, y, direction, painted = {}, 0, 0, 0, False
     grid[0, 0] = 1
     while True:
-        instr = '{:05}'.format(memory[pointer])
+        instr = "{:05}".format(memory[pointer])
         opcode = int(instr[-2:])
         mode3, mode2, mode1 = list(map(int, instr[:-2]))
         if opcode == 1:  # add
@@ -106,9 +106,9 @@ def main():
     for y in range(maxY, minY - 1, -1):
         for x in range(minX, maxX + 1):
             val = grid[x, y] if (x, y) in grid else 0
-            print(' ' if val == 0 else '#', end='')
+            print(" " if val == 0 else "#", end="")
         print()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

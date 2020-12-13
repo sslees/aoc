@@ -13,11 +13,11 @@ def adjust(mode, address, memory, base):
 
 def main():
     pointer, base = 0, 0
-    with open('input.txt') as f:
-        memory = list(map(int, f.readline().split(',')))
+    with open("input.txt") as f:
+        memory = list(map(int, f.readline().split(",")))
     memory.extend([0] * len(memory) * 10)
     while True:
-        instr = '{:05}'.format(memory[pointer])
+        instr = "{:05}".format(memory[pointer])
         opcode = int(instr[-2:])
         mode3, mode2, mode1 = list(map(int, instr[:-2]))
         if opcode == 1:  # add
@@ -34,7 +34,7 @@ def main():
             pointer += 4
         elif opcode == 3:  # input
             address1 = adjust(mode1, pointer + 1, memory, base)
-            memory[address1] = int(input('> '))
+            memory[address1] = int(input("> "))
             pointer += 2
         elif opcode == 4:  # output
             address1 = adjust(mode1, pointer + 1, memory, base)
@@ -70,5 +70,5 @@ def main():
             raise Exception
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

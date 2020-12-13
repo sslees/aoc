@@ -20,7 +20,10 @@ def build_maze(filename):
     orig = maze.copy()
     for n in list(maze):
         if maze.nodes[n]["label"] == ".":
-            for p, q, in combinations(maze[n], 2):
+            for (
+                p,
+                q,
+            ) in combinations(maze[n], 2):
                 weight = maze.edges[p, n]["weight"] + maze.edges[n, q]["weight"]
                 maze.add_edge(
                     p,
@@ -30,7 +33,11 @@ def build_maze(filename):
                     else min(weight, maze.edges[p, q]["weight"]),
                 )
             maze.remove_node(n)
-    for p, q, w, in maze.edges.data("weight"):
+    for (
+        p,
+        q,
+        w,
+    ) in maze.edges.data("weight"):
         assert w == nx.shortest_path_length(orig, p, q, "weight")
     return maze, start
 

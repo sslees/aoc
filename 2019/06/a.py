@@ -5,7 +5,7 @@ indirects = {}
 
 
 def calc(planet):
-    if planet == 'COM':
+    if planet == "COM":
         return 0
     if planet in indirects:
         return indirects[planet]
@@ -14,10 +14,10 @@ def calc(planet):
     return indirects[planet]
 
 
-with open('input.txt') as f:
+with open("input.txt") as f:
     count = 0
     for l in f.readlines():
-        inner, outer = l.strip().split(')')
+        inner, outer = l.strip().split(")")
         orbits[outer] = inner
     for o in orbits:
         count += calc(o)

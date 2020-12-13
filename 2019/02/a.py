@@ -1,8 +1,8 @@
 #! /usr/bin/env python3
 
-with open('input.txt') as f:
+with open("input.txt") as f:
     for line in f.readlines():
-        codes = line.split(',')
+        codes = line.split(",")
         codes[1:3] = 12, 2
         for pos in range(0, len(codes), 4):
             op = int(codes[pos])

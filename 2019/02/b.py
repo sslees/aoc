@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 
-with open('input.txt') as f:
+with open("input.txt") as f:
     data = f.readline()
     for noun in range(0, 99):
         for verb in range(0, 99):
-            codes = data.split(',')
+            codes = data.split(",")
             codes[1:3] = noun, verb
             for pos in range(0, len(codes), 4):
                 op = int(codes[pos])

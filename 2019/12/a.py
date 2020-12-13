@@ -14,9 +14,9 @@ class Moon:
         self.dz = 0
 
     def __str__(self):
-        return ('pos=<x={: 3}, y={: 3}, z={: 3}>, ' +
-                'vel=<x={: 3}, y={: 3}, z={: 3}>').format(
-                    self.x, self.y, self.z, self.dx, self.dy, self.dz)
+        return (
+            "pos=<x={: 3}, y={: 3}, z={: 3}>, " + "vel=<x={: 3}, y={: 3}, z={: 3}>"
+        ).format(self.x, self.y, self.z, self.dx, self.dy, self.dz)
 
     def apply_gravity(self, other):
         if self.x < other.x:
@@ -44,13 +44,14 @@ class Moon:
         self.z += self.dz
 
     def energy(self):
-        return (abs(self.x) + abs(self.y) + abs(self.z)) * \
-            (abs(self.dx) + abs(self.dy) + abs(self.dz))
+        return (abs(self.x) + abs(self.y) + abs(self.z)) * (
+            abs(self.dx) + abs(self.dy) + abs(self.dz)
+        )
 
 
 def main():
     moons = []
-    with open('input.txt') as f:
+    with open("input.txt") as f:
         for l in f.readlines():
             match = re.match(r"<x=(-?\d+), y=(-?\d+), z=(-?\d+)>\n", l)
             moons.append(Moon(*map(int, match.groups())))
@@ -62,5 +63,5 @@ def main():
     print(sum([moon.energy() for moon in moons]))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

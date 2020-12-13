@@ -8,7 +8,7 @@ def fuel_needed(mass):
     return 0
 
 
-with open('input.txt') as f:
+with open("input.txt") as f:
     total = 0
     for line in f.readlines():
         total += fuel_needed(int(line))

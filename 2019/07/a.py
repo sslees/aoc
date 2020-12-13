@@ -14,13 +14,13 @@ def compute(phase, signal=0):
     sw = sys.stdout
     prfd, pwfd = os.pipe()
     sys.stdin = os.fdopen(prfd)
-    sys.stdout = os.fdopen(pwfd, 'w')
+    sys.stdout = os.fdopen(pwfd, "w")
     mem = prog.copy()
     pc = 0
     print(phase)
     print(signal)
     while True:
-        instr = '{:05}'.format(mem[pc])
+        instr = "{:05}".format(mem[pc])
         op = int(instr[-2:])
         _, m2, m1 = list(map(int, instr[:-2]))
         if op == 99:
@@ -72,10 +72,10 @@ def compute(phase, signal=0):
     return res
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     outs = set()
-    with open('input.txt') as f:
-        prog = list(map(int, f.readline().split(',')))
+    with open("input.txt") as f:
+        prog = list(map(int, f.readline().split(",")))
     for perm in permutations(range(5)):
         pA, pB, pC, pD, pE = perm
         sB = compute(pA)

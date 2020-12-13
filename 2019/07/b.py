@@ -8,7 +8,7 @@ sr = sys.stdin
 sw = sys.stdout
 prfd, pwfd = os.pipe()
 sys.stdin = os.fdopen(prfd)
-sys.stdout = os.fdopen(pwfd, 'w')
+sys.stdout = os.fdopen(pwfd, "w")
 
 
 def compute(mem, pc, phase):
@@ -16,7 +16,7 @@ def compute(mem, pc, phase):
         print(phase)
         print(int(input()))
     while True:
-        instr = '{:05}'.format(mem[pc])
+        instr = "{:05}".format(mem[pc])
         op = int(instr[-2:])
         _, m2, m1 = list(map(int, instr[:-2]))
         if op == 1:
@@ -65,9 +65,9 @@ def compute(mem, pc, phase):
             return None
 
 
-if __name__ == '__main__':
-    with open('input.txt') as f:
-        prog = list(map(int, f.readline().split(',')))
+if __name__ == "__main__":
+    with open("input.txt") as f:
+        prog = list(map(int, f.readline().split(",")))
     vals = set()
     for perm in itertools.permutations(range(5, 10)):
         pipeline = [(prog.copy(), 0, p) for p in perm]

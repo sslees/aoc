@@ -17,18 +17,19 @@ class Moon:
         return hash((self.x, self.y, self.z, self.dx, self.dy, self.dz))
 
     def __eq__(self, other):
-        return \
-            self.x == other.x and \
-            self.y == other.y and \
-            self.z == other.z and \
-            self.dx == other.dx and \
-            self.dy == other.dy and \
-            self.dz == other.dz
+        return (
+            self.x == other.x
+            and self.y == other.y
+            and self.z == other.z
+            and self.dx == other.dx
+            and self.dy == other.dy
+            and self.dz == other.dz
+        )
 
     def __str__(self):
-        return ('pos=<x={: 3}, y={: 3}, z={: 3}>, ' +
-                'vel=<x={: 3}, y={: 3}, z={: 3}>').format(
-                    self.x, self.y, self.z, self.dx, self.dy, self.dz)
+        return (
+            "pos=<x={: 3}, y={: 3}, z={: 3}>, " + "vel=<x={: 3}, y={: 3}, z={: 3}>"
+        ).format(self.x, self.y, self.z, self.dx, self.dy, self.dz)
 
     def apply_gravity(self, other):
         if self.x < other.x:
@@ -56,15 +57,16 @@ class Moon:
         self.z += self.dz
 
     def energy(self):
-        return (abs(self.x) + abs(self.y) + abs(self.z)) * \
-            (abs(self.dx) + abs(self.dy) + abs(self.dz))
+        return (abs(self.x) + abs(self.y) + abs(self.z)) * (
+            abs(self.dx) + abs(self.dy) + abs(self.dz)
+        )
 
 
 def main():
     moons = []
     cache = set()
     # with open('example1p1.txt') as f:
-    with open('test1p2.txt') as f:
+    with open("test1p2.txt") as f:
         for l in f.readlines():
             match = re.match(r"<x=(-?\d+), y=(-?\d+), z=(-?\d+)>\n", l)
             moon = Moon(*map(int, match.groups()))
@@ -81,8 +83,8 @@ def main():
         for moon in moons:
             moon.apply_velocity()
         print(sum([moon.energy() for moon in moons]))
-    print('steps: {}\n'.format(len(cache)))
+    print("steps: {}\n".format(len(cache)))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

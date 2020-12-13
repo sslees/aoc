@@ -16,8 +16,8 @@ def adjust(mode, address, memory, base):
 
 def main(stdscr):
     pointer, base = 0, 0
-    with open('input.txt') as f:
-        memory = list(map(int, f.readline().split(',')))
+    with open("input.txt") as f:
+        memory = list(map(int, f.readline().split(",")))
     memory.extend([0] * len(memory) * 10)
     memory[0] = 2  # number of quarters inserted
     buff = []
@@ -25,7 +25,7 @@ def main(stdscr):
     curses.curs_set(0)
     stdscr.clear()
     while True:
-        instr = '{:05}'.format(memory[pointer])
+        instr = "{:05}".format(memory[pointer])
         opcode = int(instr[-2:])
         mode3, mode2, mode1 = list(map(int, instr[:-2]))
         if opcode == 1:  # add
@@ -86,19 +86,19 @@ def main(stdscr):
         if len(buff) == 3:
             ch, y, x = buff.pop(), buff.pop(), buff.pop()
             if x == -1 and y == 0:
-                stdscr.addstr(0, 0, 'score: {}'.format(ch))
+                stdscr.addstr(0, 0, "score: {}".format(ch))
             else:
                 if ch == 0:
-                    ch = ' '
+                    ch = " "
                 elif ch == 1:
-                    ch = '#'
+                    ch = "#"
                 elif ch == 2:
-                    ch = '-'
+                    ch = "-"
                 elif ch == 3:
-                    ch = '='
+                    ch = "="
                     paddle = x
                 elif ch == 4:
-                    ch = '.'
+                    ch = "."
                     ball = x
                 stdscr.addch(y + 1, x, ch)
             stdscr.refresh()
