@@ -18,7 +18,7 @@ def tf2d(x, y, dx, dy, r):
 
 def cos(angle):
     assert angle % 90 == 0
-    angle = ((angle % 360 + 360) % 360)
+    angle %= 360
     if angle == 0:
         return 1
     if angle == 180:
@@ -28,7 +28,7 @@ def cos(angle):
 
 def sin(angle):
     assert angle % 90 == 0
-    angle = ((angle % 360 + 360) % 360)
+    angle %= 360
     if angle == 90:
         return 1
     if angle == 270:
@@ -40,14 +40,15 @@ def pid(p, i, d, total, last, error):
     delta = error - last
     total += error
     last = error
-    return total, last,\
-        (error / p if p else 0) +\
-        (total / i if i else 0) +\
-        (delta / d if d else 0)
+    return (
+        total,
+        last,
+        (error / p if p else 0) + (total / i if i else 0) + (delta / d if d else 0),
+    )
 
 
 def pidloop():
-    p, i, d = 20, 10_000, 2/3
+    p, i, d = 20, 10_000, 2 / 3
     total = last = 0
     signal = 100
     while True:
