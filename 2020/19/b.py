@@ -1,12 +1,38 @@
 #! /bin/env python3
 
-
-def main():
-    with open("e1.txt") as f:
-        data = [l.strip() for l in f.readlines()]
-    for l in data:
-        print(l)
+import itertools
+import functools
+import re
 
 
-if __name__ == "__main__":
-    main()
+@functools.cache
+def possible(i=0):
+    return [p for p in _poss(int(i)) if p in msgs]
+
+
+def _poss(i):
+    opts = rules[i]
+    if opts[0][0][0] == '"':
+        yield opts[0][0][1]
+    else:
+        for opt in opts:
+            for perm in itertools.product(*map(possible, opt)):
+                yield "".join(perm)
+
+
+with open("input.txt") as f:
+    rule, msgs = f.read().split("\n\n")
+rules = {}
+for r in rule.split("\n"):
+    i, r = r.split(": ")
+    rules[int(i)] = [s.split() for s in r.split(" | ")]
+patt = "^((?:{}){{2,}})((?:{})+)$".format(
+    "|".join(possible(42)), "|".join(possible(31))
+)
+matches = []
+for msg in msgs.split("\n"):
+    m = re.match(patt, msg)
+    if m and len(m.group(1)) > len(m.group(2)):
+        matches.append(m.group(0))
+print(len(matches))
+# print(possible.cache_info())
