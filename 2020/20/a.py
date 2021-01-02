@@ -4,24 +4,25 @@ import collections
 import math
 
 
+def opts(tile):
+    for _ in range(2):
+        for _ in range(4):
+            yield tile
+            tile[:] = map("".join, zip(*reversed(tile)))  # rotate
+        tile[:] = map("".join, zip(*tile))  # transpose
+
+
 def main():
-    hashes = {}  # would love a histogram for counts of values in a dict...
     with open("input.txt") as f:
-        for piece in f.read()[:-1].removeprefix("Tile ").split("\n\nTile "):
-            num, piece = piece.split(":\n")
-            num, piece = int(num), piece.split("\n")
-            hashes[num] = [
-                hash(piece[0]),
-                hash("".join((row[-1] for row in piece))),
-                hash(piece[-1][::-1]),
-                hash("".join((row[0] for row in piece[::-1]))),
-                hash("".join((row[0] for row in piece))),
-                hash(piece[-1]),
-                hash("".join((row[-1] for row in piece[::-1]))),
-                hash(piece[0][::-1]),
-            ]
-    cts = collections.Counter((h for p in hashes.values() for h in p))
-    print(math.prod(p for p, hl in hashes.items() if sum(cts[h] for h in hl) == 12))
+        data = f.read()
+    nbrs = collections.defaultdict(set)
+    for o in data[:-1].split("\n\n"):
+        num = int(o[5:9])
+        tile = o[11:].split("\n")
+        for o in opts(tile):
+            nbrs[o[0]].add(num)
+    cts = collections.Counter(p for e in nbrs.values() if len(e) > 1 for p in e)
+    print(math.prod(e for e in cts if cts[e] == 4))
 
 
 if __name__ == "__main__":
