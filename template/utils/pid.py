@@ -1,4 +1,4 @@
-import itertools as _itertools
+from itertools import product as _product
 
 
 class Controller:
@@ -42,7 +42,7 @@ def tune(system, setpoint, start, kpmin=1, kpmax=1, kimin=1, kimax=1, kdmin=0, k
         else [kdmin]
     )
     results = {}
-    for ks in _itertools.product(kps, kis, kds):
+    for ks in _product(kps, kis, kds):
         controller = Controller(setpoint, *ks)
         value = start
         errs = [setpoint] * STABILITY
