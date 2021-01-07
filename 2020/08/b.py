@@ -34,7 +34,8 @@ def main():
             tmp[i] = "jmp " + tmp[i].split()[1]
         else:
             continue
-        print(run(tmp))
+        if acc := run(tmp):
+            print(acc)
 
 
 if __name__ == "__main__":

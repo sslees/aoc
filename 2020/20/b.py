@@ -28,10 +28,10 @@ def stitch(tiles, puzzle):
 
 def main():
     with open("input.txt") as f:
-        data = f.read()
+        data = f.read().rstrip("\r\n")
     tiles = {}
     nbrs = collections.defaultdict(set)
-    for t in data[:-1].split("\n\n"):
+    for t in data.split("\n\n"):
         num = int(t[5:9])
         tile = t[11:].split("\n")
         tiles[num] = tile

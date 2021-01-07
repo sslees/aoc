@@ -1,5 +1,5 @@
 advent-of-code-data==0.9.7
--e git+git@github.com:sslees/aoc.git@2cc1a730b25255447f9f0a781a1a465a8ce1ecc4#egg=aoc
+-e git+git@github.com:sslees/aoc.git@4e7d6a870bb130601ee797affea2da604b83dff2#egg=aoc
 appdirs==1.4.4
 astroid==2.4.2
 beautifulsoup4==4.9.3

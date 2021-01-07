@@ -1,6 +1,5 @@
 #! /bin/env python3
 
-
 import itertools
 
 
@@ -16,6 +15,7 @@ def main():
             ]
         ):
             print(d[i])
+            break
 
 
 if __name__ == "__main__":

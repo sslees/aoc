@@ -14,9 +14,9 @@ def opts(tile):
 
 def main():
     with open("input.txt") as f:
-        data = f.read()
+        data = f.read().rstrip("\r\n")
     nbrs = collections.defaultdict(set)
-    for o in data[:-1].split("\n\n"):
+    for o in data.split("\n\n"):
         num = int(o[5:9])
         tile = o[11:].split("\n")
         for o in opts(tile):

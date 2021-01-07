@@ -29,7 +29,7 @@ def game(p1, p2):
 
 def main():
     with open("input.txt") as f:
-        p1, p2 = f.read()[:-1].split("\n\n")
+        p1, p2 = f.read().rstrip("\r\n").split("\n\n")
     p1 = collections.deque(map(int, p1.removeprefix("Player 1:\n").split("\n")))
     p2 = collections.deque(map(int, p2.removeprefix("Player 2:\n").split("\n")))
     win = p1 if game(p1, p2) == 1 else p2

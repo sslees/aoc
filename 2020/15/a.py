@@ -2,7 +2,7 @@
 
 
 def main():
-    with open("e1.txt") as f:
+    with open("input.txt") as f:
         d = [int(l.strip()) for l in f.readline().split(",")]
     more = {}
     when = {}
