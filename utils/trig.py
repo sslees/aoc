@@ -1,4 +1,4 @@
-from collections import namedtuple as _namedtuple
+from collections import namedtuple
 
 
 def sin(angle):
@@ -13,7 +13,7 @@ def cos(angle):
     return 1 if not angle else -1 if angle == 180 else 0
 
 
-class Point2D(_namedtuple("Point2D", ("x", "y"))):
+class Point2D(namedtuple("Point2D", ("x", "y"))):
     __slots__ = ()
 
     @property
@@ -29,7 +29,7 @@ class Point2D(_namedtuple("Point2D", ("x", "y"))):
         return Point2D(x2, y2)
 
 
-class Point3D(_namedtuple("Point3D", ("x", "y", "z"))):
+class Point3D(namedtuple("Point3D", ("x", "y", "z"))):
     __slots__ = ()
 
     @property
