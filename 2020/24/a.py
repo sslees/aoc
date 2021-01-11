@@ -7,20 +7,11 @@ import re
 def main():
     with open("input.txt") as f:
         data = [l.strip() for l in f.readlines()]
-    cells = collections.defaultdict(bool)
+    tiles = collections.defaultdict(bool)
     for l in data:
-        x, y = 0, 0
-        for d in re.findall(r"[ns]?[ew]", l.replace("nw", "new").replace("se", "swe")):
-            if d == "e":
-                x += 1
-            elif d == "w":
-                x -= 1
-            elif d == "ne":
-                y += 1
-            else:  # d == "sw"
-                y -= 1
-        cells[x, y] ^= True
-    print(list(cells.values()).count(True))
+        ds = re.findall(r"[ns]?[ew]", l.replace("nw", "new").replace("se", "swe"))
+        tiles[ds.count("e") - ds.count("w"), ds.count("ne") - ds.count("sw")] ^= True
+    print(list(tiles.values()).count(True))
 
 
 if __name__ == "__main__":
