@@ -1,4 +1,5 @@
 from collections import defaultdict, namedtuple
+from functools import cache
 from itertools import product
 
 # neighborhoods
@@ -21,29 +22,33 @@ class Automaton:
         self.dirs = neighborhood
         self.cells = defaultdict(bool if infinite else type(None), configuration)
         for p in list(self.cells):
-            self.cells |= self.neighbors(p)
+            self.cells |= {n: self.cells[n] for n in self.neighbors(p)}
+        self.changes = set(self.cells)
 
+    @cache
     def neighbors(self, pos):
-        return {(n := tuple(map(sum, zip(pos, d)))): self.cells[n] for d in self.dirs}
+        return [tuple(map(sum, zip(pos, d))) for d in self.dirs]
 
     def evaluate(self, pos):
         cur = self.cells[pos]
         if cur is None:
             return None, False
-        ct = list(self.neighbors(pos).values()).count(True)
+        ct = [self.cells[n] for n in self.neighbors(pos)].count(True)
         b, s = self.rule
         nxt = ct in s if cur is True else ct in b if cur is False else None
         return nxt, nxt != cur
 
     def step(self):
-        changes = []
-        tmp = {}
-        for pos in list(self.cells):
-            tmp[pos], diff = self.evaluate(pos)
+        updates = {}
+        changes = set()
+        for pos in list(self.changes):
+            updates[pos], diff = self.evaluate(pos)
             if diff:
-                changes.append(pos)
-        self.cells |= tmp
-        return len(changes)
+                changes.add(pos)
+                changes.update(self.neighbors(pos))
+        self.cells |= updates
+        self.changes = changes
+        return bool(changes)
 
     def population(self):
         return list(self.cells.values()).count(True)

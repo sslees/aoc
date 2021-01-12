@@ -1,27 +1,23 @@
 #! /bin/env python3
 
+from functools import cache
 import utils.cells as cells
 
 
 class VisNbr(cells.Automaton):
-    def evaluate(self, pos):
-        cur = self.cells[pos]
-        if cur is None:
-            return None, False
-        ct = 0
-        for dx, dy in self.dirs:
+    @cache
+    def neighbors(self, pos):
+        nbrs = []
+        for d in self.dirs:
             vis = None
-            x, y = pos
+            p = pos
             while vis is None:
-                y += dy
-                x += dx
-                if (x, y) not in self.cells:
+                p = tuple(map(sum, zip(p, d)))
+                if p not in self.cells:
                     break
-                vis = self.cells[x, y]
-            ct += bool(vis)
-        b, s = self.rule
-        nxt = ct in s if cur is True else ct in b if cur is False else None
-        return nxt, nxt != cur
+                vis = self.cells[p]
+            nbrs.append(p)
+        return nbrs
 
 
 def main():
