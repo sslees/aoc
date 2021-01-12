@@ -1,6 +1,10 @@
+#! /usr/bin/env python3
+
 from collections import defaultdict, namedtuple
 from functools import cache
 from itertools import product
+from time import sleep
+import curses
 
 # neighborhoods
 HEX = tuple((dx, dy) for dx, dy in product((-1, 0, 1), repeat=2) if dx != dy)
@@ -54,21 +58,19 @@ class Automaton:
         return list(self.cells.values()).count(True)
 
     def __repr__(self):  # TODO
-        xs, ys = zip(*self.cells)
-        return (
-            "\n".join(
-                "".join(
-                    "#"
-                    if self.cells[x, y]
-                    else "L"
-                    if self.cells[x, y] is False
-                    else "."
-                    for x in range(min(xs) + 1, max(xs))
+        chars = {
+            p: "█" if v else " " if v is False else "X" for p, v in self.cells.items()
+        }
+        dims = list(zip(*chars))
+        if len(dims) >= 2:
+            xs, ys = dims[:2]
+            return (
+                "\n".join(
+                    "".join(chars[x, y] for x in range(min(xs) + 1, max(xs)))
+                    for y in range(min(ys) + 1, max(ys))
                 )
-                for y in range(min(ys) + 1, max(ys))
+                + "\n"
             )
-            + "\n"
-        )
         # xs, ys = zip(*cells)
         # print(
         #     "\n".join(
@@ -96,3 +98,23 @@ class Automaton:
         #         for r in slc:
         #             print("".join(r))
         #         print()
+
+
+def main(stdscr):
+    cols, rows = 80, 25
+    cfg = {p: False for p in product(range(cols), range(rows))}
+    for x, y in (0, 0), (4, 0), (5, 0), (6, 0), (1, 0), (1, 1), (1, 2), (1, 5), (2, 1):
+        cfg[x + cols // 2, y + rows // 2] = True
+    auto = Automaton(cfg, False)
+    curses.curs_set(0)
+    stdscr.clear()
+    print(auto)
+    while auto.step():
+        stdscr.addstr(0, 0, str(auto))
+        sleep(0.1)
+        stdscr.refresh()
+    stdscr.getch()
+
+
+if __name__ == "__main__":
+    curses.wrapper(main)
