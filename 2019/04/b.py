@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 
+from parse import search
+
 
 def check(s):
     adjacent = False
@@ -19,8 +21,11 @@ def check(s):
     return adjacent and ascending
 
 
+with open("input.txt") as f:
+    data = f.readline()
 count = 0
-for p in range(271973, 785961):
+a, b = search("{:d}-{:d}", data)
+for p in range(a, b):
     if check(str(p)):
         count += 1
 print(count)
