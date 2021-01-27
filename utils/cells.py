@@ -59,7 +59,7 @@ class Automaton:
 
     def __repr__(self):  # TODO
         chars = {
-            p: "█" if v else " " if v is False else "X" for p, v in self.cells.items()
+            p: "#" if v else "." if v is False else "?" for p, v in self.cells.items()
         }
         dims = list(zip(*chars))
         if len(dims) >= 2:
