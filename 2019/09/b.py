@@ -6,11 +6,9 @@ from utils.intcode import Computer
 def main():
     with open("input.txt") as f:
         prog = list(map(int, f.readline().split(",")))
-    io = [5]
-    comp = Computer(prog, io.pop, io.append)
+    comp = Computer(prog, [2].pop, print)
     while comp.step():
         pass
-    print(io.pop())
 
 
 if __name__ == "__main__":

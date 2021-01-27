@@ -2,12 +2,13 @@ from collections import defaultdict
 
 
 class Computer:
-    def __init__(self, program, read, write):
+    def __init__(self, program, read=None, write=None):
         self.mem = defaultdict(int, enumerate(program))
         self.read = read
         self.write = write
         self.ptr = 0
         self.base = 0
+        self.running = True
 
     def param(self, mode):
         self.ptr += 1
@@ -20,6 +21,8 @@ class Computer:
         raise Exception
 
     def step(self):
+        if not self.running:
+            return False
         instr = "{:05}".format(self.mem[self.ptr])
         op = int(instr[-2:])
         modes = list(map(int, instr[-3::-1]))
@@ -51,6 +54,7 @@ class Computer:
             a1 = self.param(modes[0])
             self.base += self.mem[a1]
         elif op == 99:  # halt
+            self.running = False
             return False
         else:
             raise Exception

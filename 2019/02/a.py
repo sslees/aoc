@@ -1,18 +1,18 @@
 #! /usr/bin/env python3
 
-with open("input.txt") as f:
-    for line in f.readlines():
-        codes = line.split(",")
-        codes[1:3] = 12, 2
-        for pos in range(0, len(codes), 4):
-            op = int(codes[pos])
-            if op == 99:
-                print(codes[0])
-                break
-            in1 = int(codes[pos + 1])
-            in2 = int(codes[pos + 2])
-            out = int(codes[pos + 3])
-            if op == 1:
-                codes[out] = int(codes[in1]) + int(codes[in2])
-            elif op == 2:
-                codes[out] = int(codes[in1]) * int(codes[in2])
+from utils.intcode import Computer
+
+
+def main():
+    with open("input.txt") as f:
+        prog = list(map(int, f.readline().split(",")))
+    comp = Computer(prog)
+    comp.mem[1] = 12
+    comp.mem[2] = 2
+    while comp.step():
+        pass
+    print(comp.mem[0])
+
+
+if __name__ == "__main__":
+    main()

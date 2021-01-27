@@ -1,7 +1,6 @@
 #! /usr/bin/env python3
 
 from utils.intcode import Computer
-from itertools import product
 
 
 def check(prog, x, y):
@@ -17,10 +16,14 @@ def check(prog, x, y):
 def main():
     with open("input.txt") as f:
         prog = list(map(int, f.readline().split(",")))
-    count = 0
-    for x, y in product(range(50), repeat=2):
-        count += check(prog, x, y)
-    print(count)
+    x, y = 99, 0
+    while True:
+        while not check(prog, x, y):
+            y += 1
+        if check(prog, x - 99, y + 99):
+            break
+        x += 1
+    print((x - 99)  * 10_000 + y)
 
 
 if __name__ == "__main__":
