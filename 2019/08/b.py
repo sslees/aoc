@@ -1,26 +1,17 @@
-print(
-    *map(
-        lambda r: "".join(r).replace("0", " "),
-        list(
-            zip(
-                *[
-                    iter(
-                        list(
-                            map(
-                                lambda p: next(filter(lambda v: v != "2", p)),
-                                zip(
-                                    *zip(
-                                        *[iter(open("input.txt").readline().strip())]
-                                        * (25 * 6)
-                                    )
-                                ),
-                            )
-                        )
-                    )
-                ]
-                * 25
-            )
-        ),
-    ),
-    sep="\n"
-)
+#! /usr/bin/env python3
+
+from textwrap import wrap
+import utils.ocr as ocr
+
+
+def main():
+    with open("input.txt") as f:
+        data = f.readline().strip()
+    W, H = 25, 6
+    layers = wrap(data, W * H)
+    pic = "".join(map(lambda l: next(v for v in l if v != "2"), zip(*layers)))
+    print(ocr.scan("\n".join(wrap(pic, W)).replace("0", ".").replace("1", "#")))
+
+
+if __name__ == "__main__":
+    main()

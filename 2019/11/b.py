@@ -1,113 +1,46 @@
 #! /usr/bin/env python3
 
-
-def adjust(mode, address, memory, base):
-    if mode == 0:  # position
-        return memory[address]
-    if mode == 1:  # immediate
-        return address
-    if mode == 2:  # relative
-        return base + memory[address]
-    raise Exception
+from collections import defaultdict
+from utils.intcode import Computer
+import utils.ocr as ocr
 
 
-def look(grid, x, y):
-    return grid[x, y] if (x, y) in grid else 0
+class Robot:
+    def __init__(self):
+        self.panels = defaultdict(int)
+        self.x = 0
+        self.y = 0
+        self.dir = 90
 
+    def camera(self):
+        return self.panels[self.x, self.y]
 
-def paint(grid, x, y, val):
-    grid[x, y] = val
+    def paint(self, val):
+        self.panels[self.x, self.y] = val
 
-
-def move(x, y, direction, val):
-    if val == 0:
-        direction -= 90
-    else:
-        direction += 90
-    direction = (direction + 360) % 360
-    if direction == 0:
-        return x, y + 1, direction
-    if direction == 90:
-        return x + 1, y, direction
-    if direction == 180:
-        return x, y - 1, direction
-    if direction == 270:
-        return x - 1, y, direction
-    raise Exception
+    def turn(self, val):
+        self.dir = (self.dir - 90 if val else self.dir + 90) % 360
+        self.x += 1 if self.dir == 0 else -1 if self.dir == 180 else 0
+        self.y += 1 if self.dir == 90 else -1 if self.dir == 270 else 0
 
 
 def main():
-    pointer, base = 0, 0
     with open("input.txt") as f:
-        memory = list(map(int, f.readline().split(",")))
-    memory.extend([0] * len(memory) * 10)
-    grid, x, y, direction, painted = {}, 0, 0, 0, False
-    grid[0, 0] = 1
-    while True:
-        instr = "{:05}".format(memory[pointer])
-        opcode = int(instr[-2:])
-        mode3, mode2, mode1 = list(map(int, instr[:-2]))
-        if opcode == 1:  # add
-            address1 = adjust(mode1, pointer + 1, memory, base)
-            address2 = adjust(mode2, pointer + 2, memory, base)
-            address3 = adjust(mode3, pointer + 3, memory, base)
-            memory[address3] = memory[address1] + memory[address2]
-            pointer += 4
-        elif opcode == 2:  # multiply
-            address1 = adjust(mode1, pointer + 1, memory, base)
-            address2 = adjust(mode2, pointer + 2, memory, base)
-            address3 = adjust(mode3, pointer + 3, memory, base)
-            memory[address3] = memory[address1] * memory[address2]
-            pointer += 4
-        elif opcode == 3:  # input
-            address1 = adjust(mode1, pointer + 1, memory, base)
-            memory[address1] = int(look(grid, x, y))
-            pointer += 2
-        elif opcode == 4:  # output
-            address1 = adjust(mode1, pointer + 1, memory, base)
-            if not painted:
-                paint(grid, x, y, memory[address1])
-            else:
-                x, y, direction = move(x, y, direction, memory[address1])
-            painted = not painted
-            pointer += 2
-        elif opcode == 5:  # jump true
-            address1 = adjust(mode1, pointer + 1, memory, base)
-            address2 = adjust(mode2, pointer + 2, memory, base)
-            pointer = memory[address2] if memory[address1] else pointer + 3
-        elif opcode == 6:  # jump false
-            address1 = adjust(mode1, pointer + 1, memory, base)
-            address2 = adjust(mode2, pointer + 2, memory, base)
-            pointer = pointer + 3 if memory[address1] else memory[address2]
-        elif opcode == 7:  # less than
-            address1 = adjust(mode1, pointer + 1, memory, base)
-            address2 = adjust(mode2, pointer + 2, memory, base)
-            address3 = adjust(mode3, pointer + 3, memory, base)
-            memory[address3] = 1 if memory[address1] < memory[address2] else 0
-            pointer += 4
-        elif opcode == 8:  # equal to
-            address1 = adjust(mode1, pointer + 1, memory, base)
-            address2 = adjust(mode2, pointer + 2, memory, base)
-            address3 = adjust(mode3, pointer + 3, memory, base)
-            memory[address3] = 1 if memory[address1] == memory[address2] else 0
-            pointer += 4
-        elif opcode == 9:  # adjust base
-            address1 = adjust(mode1, pointer + 1, memory, base)
-            base += memory[address1]
-            pointer += 2
-        elif opcode == 99:  # halt
+        prog = list(map(int, f.readline().split(",")))
+    robo = Robot()
+    robo.panels[0, 0] = 1
+    io = []
+    comp = Computer(prog, robo.camera, io.append)
+    while comp.running:
+        while comp.running and not io:
+            comp.step()
+        if not comp.running:
             break
-        else:
-            raise Exception
-    minX = min(tile[0] for tile in grid)
-    maxX = max(tile[0] for tile in grid)
-    minY = min(tile[1] for tile in grid)
-    maxY = max(tile[1] for tile in grid)
-    for y in range(maxY, minY - 1, -1):
-        for x in range(minX, maxX + 1):
-            val = grid[x, y] if (x, y) in grid else 0
-            print(" " if val == 0 else "#", end="")
-        print()
+        robo.paint(io.pop())
+        while not io:
+            comp.step()
+        robo.turn(io.pop())
+    print(ocr.scan(robo.panels))
 
 
 if __name__ == "__main__":
