@@ -26,10 +26,7 @@ def colinear(s, a, b):
 
 def visible(s, aa):
     vis = aa - {s}
-    for (
-        a,
-        b,
-    ) in combinations(aa - {s}, 2):
+    for a, b in combinations(aa - {s}, 2):
         f = max(a, b, key=lambda a: dist(s, a))
         if f in vis and colinear(s, a, b):
             vis.remove(f)

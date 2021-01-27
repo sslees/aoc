@@ -65,8 +65,7 @@ class Moon:
 def main():
     moons = []
     cache = set()
-    # with open('example1p1.txt') as f:
-    with open("test1p2.txt") as f:
+    with open("input.txt") as f:
         for l in f.readlines():
             match = re.match(r"<x=(-?\d+), y=(-?\d+), z=(-?\d+)>\n", l)
             moon = Moon(*map(int, match.groups()))

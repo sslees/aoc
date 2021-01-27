@@ -2,7 +2,7 @@
 
 orbits = {}
 
-with open("examples-2.txt") as f:
+with open("input.txt") as f:
     you = set()
     san = set()
     for l in f.readlines():

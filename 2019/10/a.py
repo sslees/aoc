@@ -19,10 +19,7 @@ def colinear(s, a, b):
 
 def visible(station, asteroids):
     vis = asteroids - {station}
-    for (
-        a,
-        b,
-    ) in combinations(asteroids - {station}, 2):
+    for a, b in combinations(asteroids - {station}, 2):
         if b in vis and colinear(station, a, b):
             vis.remove(b)
 
@@ -37,7 +34,7 @@ def main():
                 if char == "#":
                     asteroids.add((x, y))
     station = max(asteroids, key=partial(visible, asteroids=asteroids))
-    print("{} @ {}".format(visible(station, asteroids), station))
+    print(visible(station, asteroids))
 
 
 if __name__ == "__main__":
