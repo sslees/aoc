@@ -1,58 +1,44 @@
 #! /usr/bin/env python3
 
-from itertools import combinations
-import math
+from collections import defaultdict, namedtuple
+from math import atan2, pi
 
 
-def dist(s, a):
-    dy = s[1] - a[1]
-    dx = a[0] - s[0]
-
-    return (dy ** 2 + dx ** 2) ** 0.5
-
-
-def colinear(s, a, b):
-    dya = s[1] - a[1]
-    dyb = s[1] - b[1]
-    dxa = a[0] - s[0]
-    dxb = b[0] - s[0]
-
-    return (
-        dya * dxb == dyb * dxa
-        and (dyb > 0 if dya > 0 else dyb <= 0)
-        and (dxb > 0 if dxa > 0 else dxb <= 0)
-    )
+def visible(loc, locs):
+    angles = set()
+    for l in locs - {loc}:
+        angles.add(atan2(l.y - loc.y, l.x - loc.x))
+    return len(angles)
 
 
-def visible(s, aa):
-    vis = aa - {s}
-    for a, b in combinations(aa - {s}, 2):
-        f = max(a, b, key=lambda a: dist(s, a))
-        if f in vis and colinear(s, a, b):
-            vis.remove(f)
-
-    return vis
+def dist(a, b):
+    return ((b.x - a.x) ** 2 + (b.y - a.y) ** 2) ** 0.5
 
 
-def angle(s, a):
-    dy = s[1] - a[1]
-    dx = a[0] - s[0]
-    angl = -math.degrees(math.atan(dy / dx if dx else float("inf")))
-    angl = angl + 180 if dx < 0 or dx == 0 and dy < 0 else angl
-
-    return angl + 90
+def ordered(station, locs):
+    angles = defaultdict(list)
+    for l in locs - {station}:
+        angle = atan2(l.y - station.y, l.x - station.x)
+        angles[(pi / 2 - angle) % (2 * pi)].append(l)
+    order = {}
+    for a, ls in angles.items():
+        for i, l in enumerate(sorted(ls, key=lambda p: dist(station, p))):
+            order[a + 2 * pi * i] = l
+    return [order[o] for o in sorted(order)]
 
 
 def main():
-    aa = set()
     with open("input.txt") as f:
-        for y, line in enumerate(f.readlines()):
-            for x, char in enumerate(line.strip()):
-                if char == "#":
-                    aa.add((x, y))
-    s = max(aa, key=lambda a: len(visible(a, aa)))
-    a = sorted(visible(s, aa), key=lambda a: angle(s, a))[199]
-    print(a[0] * 100 + a[1])
+        data = [l.strip() for l in f.readlines()]
+    locs = set()
+    Pt = namedtuple("Pt", ("x", "y"))
+    for r, line in enumerate(data):
+        for c, char in enumerate(line):
+            if char == "#":
+                locs.add(Pt(c, -r))
+    station = max(locs, key=lambda l: visible(l, locs))
+    winner = ordered(station, locs)[199]
+    print(winner.x * 100 - winner.y)
 
 
 if __name__ == "__main__":

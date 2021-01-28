@@ -1,40 +1,27 @@
 #! /usr/bin/env python3
 
-from functools import partial
-from itertools import combinations
+from collections import namedtuple
+from math import atan2
 
 
-def colinear(s, a, b):
-    dya = a[1] - s[1]
-    dyb = b[1] - s[1]
-    dxa = a[0] - s[0]
-    dxb = b[0] - s[0]
-
-    return (
-        dya * dxb == dyb * dxa
-        and (dyb > 0 if dya > 0 else dyb <= 0)
-        and (dxb > 0 if dxa > 0 else dxb <= 0)
-    )
-
-
-def visible(station, asteroids):
-    vis = asteroids - {station}
-    for a, b in combinations(asteroids - {station}, 2):
-        if b in vis and colinear(station, a, b):
-            vis.remove(b)
-
-    return len(vis)
+def visible(loc, locs):
+    angles = set()
+    for l in locs - {loc}:
+        angles.add(atan2(l.y - loc.y, l.x - loc.x))
+    return len(angles)
 
 
 def main():
-    asteroids = set()
     with open("input.txt") as f:
-        for y, line in enumerate(f.readlines()):
-            for x, char in enumerate(line.strip()):
-                if char == "#":
-                    asteroids.add((x, y))
-    station = max(asteroids, key=partial(visible, asteroids=asteroids))
-    print(visible(station, asteroids))
+        data = [l.strip() for l in f.readlines()]
+    locs = set()
+    Loc = namedtuple("Loc", ("x", "y"))
+    for r, line in enumerate(data):
+        for c, char in enumerate(line):
+            if char == "#":
+                locs.add(Loc(c, -r))
+    station = max(locs, key=lambda l: visible(l, locs))
+    print(visible(station, locs))
 
 
 if __name__ == "__main__":
