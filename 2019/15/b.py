@@ -27,10 +27,10 @@ class Controller:
             self.nxt = prv
             self.cmd = self.g.edges[prv, self.pos]["rev"]
             return self.cmd
-        cmds = nx.algorithms.shortest_paths.generic.shortest_path_length(
-            self.g, (0, 0), self.finish
+        lens = nx.algorithms.shortest_paths.generic.shortest_path_length(
+            self.g.to_undirected(), self.finish
         )
-        print(cmds)
+        print(max(lens.values()))
 
     def status(self, code):
         if code == 0:  # wall
