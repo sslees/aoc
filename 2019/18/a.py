@@ -1,5 +1,6 @@
 #! /bin/env python3
 
+from functools import cache
 from heapq import heappop, heappush
 import networkx as nx
 
@@ -36,20 +37,34 @@ def main():
                 break
         had = frozenset(have)
         hist.add((pos, had))
-        for nbr in maze.neighbors(pos):
+        for nbr in cnbrs(maze, pos):
             if (nbr, had) not in hist:
-                lbl = maze.nodes[nbr]["label"]
+                lbl = clbl(maze, nbr)
                 if not lbl.isupper() or lbl.lower() in have:
-                    wt = maze.edges[pos, nbr]["weight"]
-                    heappush(
-                        queue, (dist + wt + heur(pos, have, keys), dist + wt, nbr, have)
-                    )
+                    wt = dist + cwt(maze, pos, nbr)
+                    heappush(queue, (wt + heur(pos, have, keys), wt, nbr, have))
+
+
+@cache
+def cnbrs(maze, pos):
+    return list(maze.neighbors(pos))
+
+
+@cache
+def clbl(maze, pos):
+    return maze.nodes[pos]["label"]
+
+
+@cache
+def cwt(maze, pos, nbr):
+    return maze.edges[pos, nbr]["weight"]
 
 
 def heur(pos, have, keys):
     return min(mdist(pos, k) for k in keys if keys[k] not in have)
 
 
+@cache
 def mdist(a, b):
     (ar, ac), (br, bc) = a, b
     return abs(ar - br) + abs(ac - bc)
