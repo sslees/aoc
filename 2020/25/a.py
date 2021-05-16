@@ -1,19 +1,20 @@
 #! /bin/env python3
 
-P = 20201227  # should add a prime checker...
+P = 20201227
 G = 7
-
-
-def tf(s, l):
-    return pow(s, l, P)
 
 
 def main():
     with open("input.txt") as f:
         ap, bp = [int(l.strip()) for l in f.readlines()]
-    a = next(a for a in range(1, P) if tf(G, a) == ap)
-    ea = tf(bp, a)
-    print(ea)
+    for a in range(1, P):
+        p = pow(G, a, P)
+        if p == ap:
+            print(pow(bp, a, P))
+            break
+        if p == bp:
+            print(pow(ap, a, P))
+            break
 
 
 if __name__ == "__main__":
