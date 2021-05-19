@@ -37,35 +37,42 @@ def main():
                 break
         had = frozenset(have)
         hist.add((pos, had))
-        for nbr in cnbrs(maze, pos):
+        for nbr in neighbors(maze, pos):
             if (nbr, had) not in hist:
-                lbl = clbl(maze, nbr)
+                lbl = label(maze, nbr)
                 if not lbl.isupper() or lbl.lower() in have:
-                    wt = dist + cwt(maze, pos, nbr)
-                    heappush(queue, (wt + heur(pos, have, keys), wt, nbr, have))
+                    heappush(
+                        queue,
+                        (
+                            dist + heuristic(nbr, have, keys),
+                            dist + weight(maze, pos, nbr),
+                            nbr,
+                            have,
+                        ),
+                    )
 
 
 @cache
-def cnbrs(maze, pos):
+def neighbors(maze, pos):
     return list(maze.neighbors(pos))
 
 
 @cache
-def clbl(maze, pos):
+def label(maze, pos):
     return maze.nodes[pos]["label"]
 
 
 @cache
-def cwt(maze, pos, nbr):
+def weight(maze, pos, nbr):
     return maze.edges[pos, nbr]["weight"]
 
 
-def heur(pos, have, keys):
-    return min(mdist(pos, k) for k in keys if keys[k] not in have)
+def heuristic(pos, have, keys):
+    return min(manhattan(pos, k) for k in keys if keys[k] not in have)
 
 
 @cache
-def mdist(a, b):
+def manhattan(a, b):
     (ar, ac), (br, bc) = a, b
     return abs(ar - br) + abs(ac - bc)
 
