@@ -1,26 +1,20 @@
 #! /bin/env python3
 
+TURNS = 30_000_000
+
 
 def main():
     with open("input.txt") as f:
-        d = [int(l.strip()) for l in f.readline().split(",")]
-    more = {}
-    when = {}
-    for i, e in enumerate(d):
-        if e in when:
-            more[e] = when[e]
-        when[e] = i + 1
-    last = d[-1]
-    for i in range(len(d) + 1, 30000001):
-        if last not in more:
-            say = 0
-        else:
-            say = when[last] - more[last]
-        if say in when:
-            more[say] = when[say]
-        when[say] = i
-        last = say
-    print(say)
+        data = [int(s) for s in f.readline().split(",")]
+    said = [0] * (TURNS - 1)
+    for i, d in enumerate(data, 1):
+        said[d] = i
+    say = 0
+    for turn in range(len(data) + 1, TURNS + 1):
+        says = say
+        say = turn - said[says] if said[says] else 0
+        said[says] = turn
+    print(says)
 
 
 if __name__ == "__main__":
