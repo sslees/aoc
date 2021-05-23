@@ -5,7 +5,7 @@ from parse import parse
 
 def main():
     with open("input.txt") as f:
-        data = f.readlines()
+        data = [l.strip() for l in f.readlines()]
     MX, MY = 50, 6
     disp = [[0] * MX for _ in range(MY)]
     for l in data:
