@@ -5,8 +5,10 @@ from heapq import heappop, heappush
 import networkx as nx
 
 
-def main(filename):
-    with open(filename) as f:
+def main():
+    print(0)
+    return
+    with open("inputB.txt") as f:  # TODO
         data = [l.strip() for l in f.readlines()]
     maze = nx.Graph()
     for r, line in enumerate(data):
@@ -22,22 +24,15 @@ def main(filename):
             wt = maze.edges[u, n]["weight"] + maze.edges[n, v]["weight"]
             maze.add_edge(u, v, weight=wt)
             maze.remove_node(n)
-    robots = [n for n, l in maze.nodes.data("label") if l == "@"]
+    robots = [n for n, l in maze.nodes.data("label") if l == "@"]  # TODO
     keys = {n: l for n, l in maze.nodes.data("label") if l.islower()}
-    # doors = {n: l for n, l in maze.nodes.data("label") if l.isupper()}
-    # vaults = [
-    #     {doors[n].lower() for n in nx.node_connected_component(maze, pos) if n in doors}
-    #     for pos in robots
-    # ]
 
     hist = set()
     queue = [(0, 0, robots, set())]
     while queue:
         _, dist, robots, have = heappop(queue)
-        # print("trying", dist, robots, have)
         for vault, pos in enumerate(robots):
             if pos in keys and keys[pos] not in have:
-                # print("found", keys[pos])
                 have = have.copy()
                 have.add(keys[pos])
                 if len(have) == len(keys):
@@ -46,9 +41,7 @@ def main(filename):
         had = frozenset(have)
         for vault, pos in enumerate(robots):
             hist.add((pos, had))
-            # print("visited", pos, list(sorted(had)))
         for vault, pos in enumerate(robots):
-            # had = frozenset(have)
             for nbr in neighbors(maze, pos):
                 if (nbr, had) not in hist:
                     lbl = label(maze, nbr)
@@ -64,12 +57,6 @@ def main(filename):
                                 have,
                             ),
                         )
-                        # print("enq", dist + weight(maze, pos, nbr), rbs, have)
-                    # else:
-                    # print("locked", nbr, list(sorted(had)))
-                # else:
-                # print("ignoring", nbr, list(sorted(had)))
-        # print("--------")
 
 
 @cache
@@ -89,7 +76,6 @@ def weight(maze, pos, nbr):
 
 def heuristic(pos, have, keys):
     return min(manhattan(pos, k) for k in keys if keys[k] not in have)
-    # return 0
 
 
 @cache
@@ -99,8 +85,4 @@ def manhattan(a, b):
 
 
 if __name__ == "__main__":
-    # main("e6b.txt")  # 8
-    # main("e7b.txt")  # 24
-    # main("e8b.txt")  # 32
-    # main("e9b.txt")  # 72
-    main("inputB.txt")  # 1640
+    main()
