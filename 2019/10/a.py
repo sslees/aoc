@@ -1,13 +1,13 @@
 #! /usr/bin/env python3
 
 from collections import namedtuple
-from math import atan2
+import math
 
 
 def visible(loc, locs):
     angles = set()
     for l in locs - {loc}:
-        angles.add(atan2(l.y - loc.y, l.x - loc.x))
+        angles.add(math.atan2(l.y - loc.y, l.x - loc.x))
     return len(angles)
 
 

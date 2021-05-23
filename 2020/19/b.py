@@ -1,11 +1,11 @@
 #! /bin/env python3
 
-import itertools
-import functools
+from functools import cache
+from itertools import product
 import re
 
 
-@functools.cache
+@cache
 def possible(i=0):
     return [p for p in _poss(int(i)) if p in msgs]
 
@@ -16,7 +16,7 @@ def _poss(i):
         yield opts[0][0][1]
     else:
         for opt in opts:
-            for perm in itertools.product(*map(possible, opt)):
+            for perm in product(*map(possible, opt)):
                 yield "".join(perm)
 
 
@@ -35,4 +35,3 @@ for msg in msgs.split("\n"):
     if m and len(m.group(1)) > len(m.group(2)):
         matches.append(m.group(0))
 print(len(matches))
-# print(possible.cache_info())

@@ -1,6 +1,6 @@
 #! /bin/env python3
 
-import collections
+from collections import defaultdict
 import re
 import utils.cells as cells
 
@@ -8,7 +8,7 @@ import utils.cells as cells
 def main():
     with open("input.txt") as f:
         data = [l.strip() for l in f.readlines()]
-    tiles = collections.defaultdict(bool)
+    tiles = defaultdict(bool)
     for l in data:
         ds = re.findall(r"[ns]?[ew]", l.replace("nw", "new").replace("se", "swe"))
         tiles[ds.count("e") - ds.count("w"), ds.count("ne") - ds.count("sw")] ^= True

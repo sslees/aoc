@@ -1,4 +1,4 @@
-from itertools import product as product
+from itertools import product
 
 
 class Controller:

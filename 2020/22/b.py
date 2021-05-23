@@ -1,7 +1,7 @@
 #! /bin/env python3
 
-import collections
-import math
+from collections import deque
+from operator import mul
 
 
 def game(p1, p2):
@@ -15,25 +15,23 @@ def game(p1, p2):
         c1 = p1.popleft()
         c2 = p2.popleft()
         if len(p1) >= c1 and len(p2) >= c2:
-            win = game(
-                collections.deque(list(p1)[:c1]), collections.deque(list(p2)[:c2])
-            )
+            win = game(deque(list(p1)[:c1]), deque(list(p2)[:c2]))
         else:
             win = 1 if c1 > c2 else 2
         if win == 1:
-            p1.extend((c1, c2))
+            p1.extend([c1, c2])
         else:
-            p2.extend((c2, c1))
+            p2.extend([c2, c1])
     return 1 if p1 else 2
 
 
 def main():
     with open("input.txt") as f:
         p1, p2 = f.read().rstrip("\r\n").split("\n\n")
-    p1 = collections.deque(map(int, p1.removeprefix("Player 1:\n").split("\n")))
-    p2 = collections.deque(map(int, p2.removeprefix("Player 2:\n").split("\n")))
+    p1 = deque(map(int, p1.removeprefix("Player 1:\n").split("\n")))
+    p2 = deque(map(int, p2.removeprefix("Player 2:\n").split("\n")))
     win = p1 if game(p1, p2) == 1 else p2
-    print(sum(map(math.prod, zip(win, range(len(win), 0, -1)))))
+    print(sum(map(mul, win, range(len(win), 0, -1))))
 
 
 if __name__ == "__main__":

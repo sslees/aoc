@@ -1,6 +1,6 @@
 #! /bin/env python3
 
-import itertools
+from itertools import combinations
 
 
 def main():
@@ -9,10 +9,7 @@ def main():
     pre = 25
     for i in range(pre, len(d)):
         if not any(
-            [
-                a != b and a + b == d[i]
-                for a, b in itertools.combinations(d[i - pre : i], 2)
-            ]
+            [a != b and a + b == d[i] for a, b in combinations(d[i - pre : i], 2)]
         ):
             print(d[i])
             break

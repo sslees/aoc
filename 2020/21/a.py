@@ -1,14 +1,14 @@
 #! /bin/env python3
 
+from collections import Counter
 import re
-import collections
 
 
 def main():
     with open("input.txt") as f:
         data = [l.strip() for l in f.readlines()]
     srcs = {}
-    cts = collections.Counter()
+    cts = Counter()
     for l in data:
         ingrs, alrgs = re.match(r"(.+) \(contains (.+)\)", l).groups()
         ingrs, alrgs = ingrs.split(), alrgs.split(", ")

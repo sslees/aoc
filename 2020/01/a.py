@@ -1,11 +1,11 @@
 #! /bin/env python3
 
-import itertools
+from itertools import combinations
 
 
 def main():
     with open("input.txt") as f:
-        for a, b in itertools.combinations(f.readlines(), 2):
+        for a, b in combinations(f.readlines(), 2):
             a = int(a)
             b = int(b)
             if a + b == 2020:

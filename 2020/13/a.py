@@ -1,7 +1,5 @@
 #! /bin/env python3
 
-import itertools
-
 
 def main():
     with open("input.txt") as f:
@@ -9,7 +7,6 @@ def main():
         snd = set([l.strip() for l in f.readline().split(",")])
         snd.remove("x")
         snd = set(map(int, snd))
-    # print(fst, snd)
     nxt = {}
     for e in snd:
         nxt[e] = (fst // e + 1) * e - fst

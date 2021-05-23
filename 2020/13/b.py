@@ -1,6 +1,6 @@
 #! /bin/env python3
 
-import itertools
+from itertools import count
 
 
 def main():
@@ -14,7 +14,7 @@ def main():
     while ns:
         n2 = ns[-1]
         r2 = rs[n2]
-        for t in itertools.count(r, n):
+        for t in count(r, n):
             if t % n2 == r2:
                 r = t
                 n *= n2

@@ -1,6 +1,6 @@
 #! /bin/env python3
 
-import collections
+from collections import defaultdict
 import math
 import re
 
@@ -29,7 +29,7 @@ def main():
         nb for nb in nearby if all((any((r(v) for r in rules.values())) for v in nb))
     ]
 
-    candidates = collections.defaultdict(set)
+    candidates = defaultdict(set)
     for name, rule in rules.items():
         for c in range(len(nearby[0])):
             col = [nb[c] for nb in nearby]

@@ -1,6 +1,6 @@
 #! /bin/env python3
 
-import collections
+from collections import Counter, defaultdict
 import math
 
 
@@ -15,13 +15,13 @@ def opts(tile):
 def main():
     with open("input.txt") as f:
         data = f.read().rstrip("\r\n")
-    nbrs = collections.defaultdict(set)
+    nbrs = defaultdict(set)
     for o in data.split("\n\n"):
         num = int(o[5:9])
         tile = o[11:].split("\n")
         for o in opts(tile):
             nbrs[o[0]].add(num)
-    cts = collections.Counter(p for e in nbrs.values() if len(e) > 1 for p in e)
+    cts = Counter(p for e in nbrs.values() if len(e) > 1 for p in e)
     print(math.prod(e for e in cts if cts[e] == 4))
 
 

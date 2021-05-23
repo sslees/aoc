@@ -1,10 +1,10 @@
 #! /bin/env python3
 
-import itertools
-import functools
+from functools import cache
+from itertools import product
 
 
-@functools.cache
+@cache
 def possible(i=0):
     return [p for p in _poss(int(i))]
 
@@ -15,7 +15,7 @@ def _poss(i):
         yield opts[0][0][1]
     else:
         for opt in opts:
-            for perm in itertools.product(*map(possible, opt)):
+            for perm in product(*map(possible, opt)):
                 yield "".join(perm)
 
 
@@ -26,4 +26,3 @@ for r in rule.split("\n"):
     i, r = r.split(": ")
     rules[int(i)] = [s.split() for s in r.split(" | ")]
 print(len(set(possible()) & set(msgs.split("\n"))))
-# print(possible.cache_info())

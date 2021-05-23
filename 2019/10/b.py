@@ -1,13 +1,13 @@
 #! /usr/bin/env python3
 
 from collections import defaultdict, namedtuple
-from math import atan2, pi
+import math
 
 
 def visible(loc, locs):
     angles = set()
     for l in locs - {loc}:
-        angles.add(atan2(l.y - loc.y, l.x - loc.x))
+        angles.add(math.atan2(l.y - loc.y, l.x - loc.x))
     return len(angles)
 
 
@@ -18,12 +18,12 @@ def dist(a, b):
 def ordered(station, locs):
     angles = defaultdict(list)
     for l in locs - {station}:
-        angle = atan2(l.y - station.y, l.x - station.x)
-        angles[(pi / 2 - angle) % (2 * pi)].append(l)
+        angle = math.atan2(l.y - station.y, l.x - station.x)
+        angles[(math.pi / 2 - angle) % (2 * math.pi)].append(l)
     order = {}
     for a, ls in angles.items():
         for i, l in enumerate(sorted(ls, key=lambda p: dist(station, p))):
-            order[a + 2 * pi * i] = l
+            order[a + 2 * math.pi * i] = l
     return [order[o] for o in sorted(order)]
 
 

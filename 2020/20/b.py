@@ -1,6 +1,6 @@
 #! /bin/env python3
 
-import collections
+from collections import Counter, defaultdict
 import math
 
 MONSTER = [
@@ -30,14 +30,14 @@ def main():
     with open("input.txt") as f:
         data = f.read().rstrip("\r\n")
     tiles = {}
-    nbrs = collections.defaultdict(set)
+    nbrs = defaultdict(set)
     for t in data.split("\n\n"):
         num = int(t[5:9])
         tile = t[11:].split("\n")
         tiles[num] = tile
         for o in opts(tile):
             nbrs[o[0]].add(num)
-    cts = collections.Counter(p for e in nbrs.values() if len(e) > 1 for p in e)
+    cts = Counter(p for e in nbrs.values() if len(e) > 1 for p in e)
     rct = int(math.sqrt(len(tiles)))
     puzzle = [[0] * rct for _ in range(rct)]
     for r in range(rct):

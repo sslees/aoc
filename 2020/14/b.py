@@ -1,12 +1,12 @@
 #! /bin/env python3
 
-import collections
-import itertools
+from collections import defaultdict
+from itertools import product
 import re
 
 
 def floaters(addr, exes):
-    opts = list(itertools.product((True, False), repeat=len(exes)))
+    opts = list(product((True, False), repeat=len(exes)))
     for opt in opts:
         adj = addr
         for pos, bit in zip(exes, opt):
@@ -20,7 +20,7 @@ def floaters(addr, exes):
 def main():
     with open("input.txt") as f:
         data = [l.strip() for l in f.readlines()]
-    mem = collections.defaultdict(lambda: 0)
+    mem = defaultdict(lambda: 0)
     for l in data:
         if "mask" in l:
             mask = l.replace("mask = ", "")
