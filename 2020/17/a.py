@@ -5,10 +5,10 @@ import utils.cells as cells
 
 def main():
     with open("input.txt") as f:
-        lines = f.readlines()
+        lines = [l.strip() for l in f.readlines()]
     config = {}
     for r, line in enumerate(lines):
-        for c, char in enumerate(line.strip()):
+        for c, char in enumerate(line):
             config[c, r, 0] = char == "#"
     auto = cells.Automaton(config, neighborhood=cells.MOORE(3))
     for _ in range(6):

@@ -1,58 +1,50 @@
 #! /usr/bin/env python3
 
-from collections import defaultdict, namedtuple
+from collections import defaultdict
 from functools import cache
 from itertools import product
 from time import sleep
 import curses
 
 # neighborhoods
-HEX = tuple((dx, dy) for dx, dy in product((-1, 0, 1), repeat=2) if dx != dy)
-MOORE = lambda dimension=2: tuple(
-    p for p in product((-1, 0, 1), repeat=dimension) if any(p)
-)
-VNEUMANN = tuple(
-    (dx, dy) for dx, dy in product((-1, 0, 1), repeat=2) if bool(dx) ^ bool(dy)
-)
+HEX = [(dx, dy) for dx, dy in product((-1, 0, 1), repeat=2) if dx != dy]
+MOORE = lambda dimension=2: [p for p in product((-1, 0, 1), repeat=dimension) if any(p)]
+VNEUMANN = [(dx, dy) for dx, dy in product((-1, 0, 1), repeat=2) if bool(dx) ^ bool(dy)]
 
 # rules (By/Sx format)
-RULE = namedtuple("Rule", ("b", "s"))
-LIFE = RULE((3,), (2, 3))
+LIFE = [3], [2, 3]
 
 
 class Automaton:
-    def __init__(self, configuration, infinite=True, rule=LIFE, neighborhood=MOORE()):
-        self.rule = rule
+    def __init__(
+        self, configuration, *, infinite=True, neighborhood=MOORE(), rule=LIFE
+    ):
+        self.birth, self.survival = rule
         self.dirs = neighborhood
         self.cells = defaultdict(bool if infinite else type(None), configuration)
-        for p in list(self.cells):
-            self.cells |= {n: self.cells[n] for n in self.neighbors(p)}
         self.changes = set(self.cells)
+        self.changes.update(n for c in self.cells for n in self.neighbors(c))
 
     @cache
-    def neighbors(self, pos):
-        return [tuple(map(sum, zip(pos, d))) for d in self.dirs]
+    def neighbors(self, cell):
+        return [tuple(map(sum, zip(cell, d))) for d in self.dirs]
 
-    def evaluate(self, pos):
-        cur = self.cells[pos]
-        if cur is None:
-            return None, False
-        ct = [self.cells[n] for n in self.neighbors(pos)].count(True)
-        b, s = self.rule
-        nxt = ct in s if cur is True else ct in b if cur is False else None
-        return nxt, nxt != cur
+    def evaluate(self, cell):
+        state = self.cells[cell]
+        if state is None:
+            return False
+        return (
+            [self.cells[n] for n in self.neighbors(cell)].count(True)
+            in (self.survival if state else self.birth)
+        ) != state
 
     def step(self):
-        updates = {}
-        changes = set()
-        for pos in list(self.changes):
-            updates[pos], diff = self.evaluate(pos)
-            if diff:
-                changes.add(pos)
-                changes.update(self.neighbors(pos))
+        self.changes = {c for c in list(self.changes) if self.evaluate(c)}
+        updates = {cell: not self.cells[cell] for cell in self.changes}
+        for cell in updates:
+            self.changes.update(self.neighbors(cell))
         self.cells |= updates
-        self.changes = changes
-        return bool(changes)
+        return bool(self.changes)
 
     def population(self):
         return list(self.cells.values()).count(True)
@@ -105,7 +97,7 @@ def main(stdscr):
     cfg = {p: False for p in product(range(cols), range(rows))}
     for x, y in (0, 0), (4, 0), (5, 0), (6, 0), (1, 0), (1, 1), (1, 2), (1, 5), (2, 1):
         cfg[x + cols // 2, y + rows // 2] = True
-    auto = Automaton(cfg, False)
+    auto = Automaton(cfg, infinite=False)
     curses.curs_set(0)
     stdscr.clear()
     print(auto)

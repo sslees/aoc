@@ -12,7 +12,7 @@ def main():
     for l in data:
         ds = re.findall(r"[ns]?[ew]", l.replace("nw", "new").replace("se", "swe"))
         tiles[ds.count("e") - ds.count("w"), ds.count("ne") - ds.count("sw")] ^= True
-    auto = cells.Automaton(tiles, rule=cells.RULE((2,), (1, 2)), neighborhood=cells.HEX)
+    auto = cells.Automaton(tiles, rule=([2], [1, 2]), neighborhood=cells.HEX)
     for _ in range(100):
         auto.step()
     print(auto.population())

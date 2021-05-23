@@ -4,30 +4,30 @@ from functools import cache
 import utils.cells as cells
 
 
-class VisNbr(cells.Automaton):
+class VisNbrAuto(cells.Automaton):
     @cache
-    def neighbors(self, pos):
+    def neighbors(self, cell):
         nbrs = []
-        for d in self.dirs:
+        for dir in self.dirs:
             vis = None
-            p = pos
+            pos = cell
             while vis is None:
-                p = tuple(map(sum, zip(p, d)))
-                if p not in self.cells:
+                pos = tuple(map(sum, zip(pos, dir)))
+                if pos not in self.cells:
                     break
-                vis = self.cells[p]
-            nbrs.append(p)
+                vis = self.cells[pos]
+            nbrs.append(pos)
         return nbrs
 
 
 def main():
     with open("input.txt") as f:
-        lines = f.readlines()
+        lines = [l.strip() for l in f.readlines()]
     seats = {}
     for r, line in enumerate(lines):
-        for c, char in enumerate(line.strip()):
+        for c, char in enumerate(line):
             seats[c, r] = None if char == "." else char == "#"
-    auto = VisNbr(seats, infinite=False, rule=cells.RULE((0,), (0, 1, 2, 3, 4)))
+    auto = VisNbrAuto(seats, infinite=False, rule=([0], [0, 1, 2, 3, 4]))
     while auto.step():
         pass
     print(auto.population())
