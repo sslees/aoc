@@ -1,7 +1,8 @@
 #! /usr/bin/env python3
 
 from utils.intcode import Computer
-import curses
+
+# import curses
 
 
 class Game:
@@ -18,15 +19,16 @@ class Game:
         return 0  # neutral
 
 
-def main(stdscr):
+# def main(stdscr):
+def main():
     with open("input.txt") as f:
         prog = list(map(int, f.readline().split(",")))
     game = Game()
     io = []
     comp = Computer(prog, game.move, io.append)
     comp.mem[0] = 2
-    curses.curs_set(0)
-    stdscr.clear()
+    # curses.curs_set(0)
+    # stdscr.clear()
     while comp.running:
         while len(io) < 3 and comp.running:
             comp.step()
@@ -35,7 +37,7 @@ def main(stdscr):
         val, y, x = io.pop(), io.pop(), io.pop()
         if x == -1 and y == 0:
             game.score = val
-            stdscr.addstr(0, 0, "score: {}".format(val))
+            # stdscr.addstr(0, 0, "score: {}".format(val))
         else:
             if val == 2:
                 game.bricks.add((x, y))
@@ -43,10 +45,12 @@ def main(stdscr):
                 game.paddle = x
             elif val == 4:
                 game.ball = x
-            stdscr.addch(y + 1, x, " #=To"[val])
-        stdscr.refresh()
-    return game.score
+            # stdscr.addch(y + 1, x, " #=To"[val])
+        # stdscr.refresh()
+    # return game.score
+    print(game.score)
 
 
 if __name__ == "__main__":
-    print(curses.wrapper(main))
+    # print(curses.wrapper(main))
+    main()
