@@ -1,66 +1,21 @@
 #! /usr/bin/env python3
 
 from itertools import combinations
-import re
-
-
-class Moon:
-    def __init__(self, x, y, z):
-        self.x = x
-        self.y = y
-        self.z = z
-        self.dx = 0
-        self.dy = 0
-        self.dz = 0
-
-    def __str__(self):
-        return (
-            "pos=<x={: 3}, y={: 3}, z={: 3}>, " + "vel=<x={: 3}, y={: 3}, z={: 3}>"
-        ).format(self.x, self.y, self.z, self.dx, self.dy, self.dz)
-
-    def apply_gravity(self, other):
-        if self.x < other.x:
-            self.dx += 1
-            other.dx -= 1
-        elif self.x > other.x:
-            self.dx -= 1
-            other.dx += 1
-        if self.y < other.y:
-            self.dy += 1
-            other.dy -= 1
-        elif self.y > other.y:
-            self.dy -= 1
-            other.dy += 1
-        if self.z < other.z:
-            self.dz += 1
-            other.dz -= 1
-        elif self.z > other.z:
-            self.dz -= 1
-            other.dz += 1
-
-    def apply_velocity(self):
-        self.x += self.dx
-        self.y += self.dy
-        self.z += self.dz
-
-    def energy(self):
-        return (abs(self.x) + abs(self.y) + abs(self.z)) * (
-            abs(self.dx) + abs(self.dy) + abs(self.dz)
-        )
+from parse import parse
 
 
 def main():
-    moons = []
     with open("input.txt") as f:
-        for l in f.readlines():
-            match = re.match(r"<x=(-?\d+), y=(-?\d+), z=(-?\d+)>\n", l)
-            moons.append(Moon(*map(int, match.groups())))
-    for _ in range(1000):
-        for moon, other in combinations(moons, 2):
-            moon.apply_gravity(other)
-        for moon in moons:
-            moon.apply_velocity()
-    print(sum([moon.energy() for moon in moons]))
+        data = [l.strip() for l in f.readlines()]
+    moons = [(list(parse("<x={:d}, y={:d}, z={:d}>", l)), [0, 0, 0]) for l in data]
+    for _ in range(1_000):
+        for (p1, v1), (p2, v2) in combinations(moons, 2):
+            for i in range(3):
+                v1[i] = v1[i] + (1 if p1[i] < p2[i] else -1 if p1[i] > p2[i] else 0)
+                v2[i] = v2[i] + (1 if p2[i] < p1[i] else -1 if p2[i] > p1[i] else 0)
+        for p, v in moons:
+            p[:] = map(sum, zip(p, v))
+    print(sum(sum(map(abs, p)) * sum(map(abs, v)) for p, v in moons))
 
 
 if __name__ == "__main__":
