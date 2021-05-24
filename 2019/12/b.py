@@ -1,88 +1,30 @@
 #! /usr/bin/env python3
 
-from itertools import combinations
-import re
-
-
-class Moon:
-    def __init__(self, x, y, z):
-        self.x = x
-        self.y = y
-        self.z = z
-        self.dx = 0
-        self.dy = 0
-        self.dz = 0
-
-    def __hash__(self):
-        return hash((self.x, self.y, self.z, self.dx, self.dy, self.dz))
-
-    def __eq__(self, other):
-        return (
-            self.x == other.x
-            and self.y == other.y
-            and self.z == other.z
-            and self.dx == other.dx
-            and self.dy == other.dy
-            and self.dz == other.dz
-        )
-
-    def __str__(self):
-        return (
-            "pos=<x={: 3}, y={: 3}, z={: 3}>, " + "vel=<x={: 3}, y={: 3}, z={: 3}>"
-        ).format(self.x, self.y, self.z, self.dx, self.dy, self.dz)
-
-    def apply_gravity(self, other):
-        if self.x < other.x:
-            self.dx += 1
-            other.dx -= 1
-        elif self.x > other.x:
-            self.dx -= 1
-            other.dx += 1
-        if self.y < other.y:
-            self.dy += 1
-            other.dy -= 1
-        elif self.y > other.y:
-            self.dy -= 1
-            other.dy += 1
-        if self.z < other.z:
-            self.dz += 1
-            other.dz -= 1
-        elif self.z > other.z:
-            self.dz -= 1
-            other.dz += 1
-
-    def apply_velocity(self):
-        self.x += self.dx
-        self.y += self.dy
-        self.z += self.dz
-
-    def energy(self):
-        return (abs(self.x) + abs(self.y) + abs(self.z)) * (
-            abs(self.dx) + abs(self.dy) + abs(self.dz)
-        )
+from itertools import combinations, count
+from parse import parse
 
 
 def main():
-    moons = []
-    cache = set()
-    with open("input.txt") as f:
-        for l in f.readlines():
-            match = re.match(r"<x=(-?\d+), y=(-?\d+), z=(-?\d+)>\n", l)
-            moon = Moon(*map(int, match.groups()))
-            moons.append(moon)
-            print(moon)
-    while True:
-        h = hash(tuple(moons))
-        if h in cache:
-            break
-        else:
-            cache.add(h)
-        for moon, other in combinations(moons, 2):
-            moon.apply_gravity(other)
-        for moon in moons:
-            moon.apply_velocity()
-        print(sum([moon.energy() for moon in moons]))
-    print("steps: {}\n".format(len(cache)))
+    print(0)  # TODO
+    return
+    with open("e1.txt") as f:
+        data = [l.strip() for l in f.readlines()]
+    moons = [(list(parse("<x={:d}, y={:d}, z={:d}>", l)), [0, 0, 0]) for l in data]
+    hist = [({tuple(p): 0}, {tuple(v): 0}) for p, v in moons]
+    for t in count():
+        for (p1, v1), (p2, v2) in combinations(moons, 2):
+            for i in range(3):
+                v1[i] = v1[i] + (1 if p1[i] < p2[i] else -1 if p1[i] > p2[i] else 0)
+                v2[i] = v2[i] + (1 if p2[i] < p1[i] else -1 if p2[i] > p1[i] else 0)
+        for i, (p, v) in enumerate(moons):
+            p[:] = map(sum, zip(p, v))
+            p, v = tuple(p), tuple(v)
+            ph, vh = hist[i]
+            if p in ph:
+                print(f"moon {i} repeated pos {p} at time {t} after {t - ph[p]} steps")
+            if v in vh:
+                print(f"moon {i} repeated vel {v} at time {t} after {t - vh[v]} steps")
+            ph[p] = vh[v] = t
 
 
 if __name__ == "__main__":

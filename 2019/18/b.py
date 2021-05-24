@@ -6,9 +6,9 @@ import networkx as nx
 
 
 def main():
-    print(0)
+    print(0)  # TODO
     return
-    with open("inputB.txt") as f:  # TODO
+    with open("inputB.txt") as f:
         data = [l.strip() for l in f.readlines()]
     maze = nx.Graph()
     for r, line in enumerate(data):
