@@ -22,8 +22,8 @@ def main():
             y += 1
         if check(prog, x - 99, y + 99):
             break
-        x += 1
-    print((x - 99)  * 10_000 + y)
+        x += 1 if check(prog, x, y + 99) else 100
+    print((x - 99) * 10_000 + y)
 
 
 if __name__ == "__main__":

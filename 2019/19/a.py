@@ -1,7 +1,6 @@
 #! /usr/bin/env python3
 
 from utils.intcode import Computer
-from itertools import product
 
 
 def check(prog, x, y):
@@ -18,8 +17,20 @@ def main():
     with open("input.txt") as f:
         prog = list(map(int, f.readline().split(",")))
     count = 0
-    for x, y in product(range(50), repeat=2):
-        count += check(prog, x, y)
+    x = y1 = y2 = 0
+    while x < 50:
+        while not check(prog, x, y1):
+            y1 += 1
+            if y1 - y2 > 8:
+                y1 = y2
+                x += 1
+        y2 = max(y1, y2)
+        while check(prog, x, y2):
+            y2 += 1
+        if y1 > 49:
+            break
+        count += min(y2, 50) - y1
+        x += 1
     print(count)
 
 
