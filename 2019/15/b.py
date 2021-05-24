@@ -1,6 +1,5 @@
 #! /usr/bin/env python3
 
-from collections import defaultdict
 from functools import cache
 from utils.intcode import Computer
 import networkx as nx
@@ -14,9 +13,10 @@ class Controller:
         self.g = nx.DiGraph()
         self.g.add_node(self.pos, lbl="D")
 
+    @staticmethod
     @cache
-    def neighbors(self, pos):
-        c, r = self.pos
+    def neighbors(pos):
+        c, r = pos
         return {N: (c, r - 1), S: (c, r + 1), W: (c - 1, r), E: (c + 1, r)}
 
     def command(self):
@@ -34,12 +34,6 @@ class Controller:
         )
         path = max(paths.values(), key=len)
         print(len(path) - 1)
-        # for p in path[1:]:
-        #     self.g.nodes[p]["lbl"] = "o"
-        # chars = defaultdict(lambda: " ", list(self.g.nodes(data="lbl")))
-        # cs, rs = list(zip(*chars))
-        # cs, rs = range(min(cs), max(cs) + 1), range(min(rs), max(rs) + 1)
-        # print("\n".join("".join(chars[x, y] for x in cs) for y in rs))
 
     def status(self, code):
         if code == 0:  # wall

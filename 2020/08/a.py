@@ -13,7 +13,6 @@ def main():
         seen.add(ptr)
         ins, val = prog[ptr].split()
         val = int(val)
-        # print(ins, val)
         if ins == "acc":
             acc += val
             ptr += 1
