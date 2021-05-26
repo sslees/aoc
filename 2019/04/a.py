@@ -1,27 +1,22 @@
 #! /usr/bin/env python3
 
-from parse import search
+from parse import parse
 
 
 def check(s):
-    adjacent = False
-    ascending = True
-    for i in range(5):
-        if s[i] == s[i + 1]:
-            adjacent = True
-            break
     for i in range(5):
         if int(s[i]) > int(s[i + 1]):
-            ascending = False
-            break
-    return adjacent and ascending
+            return False
+    for i in range(5):
+        if s[i] == s[i + 1]:
+            return True
+    return False
 
 
 with open("input.txt") as f:
-    data = f.readline()
-count = 0
-a, b = search("{:d}-{:d}", data)
+    data = f.readline().strip()
+a, b = parse("{:d}-{:d}", data)
+ct = 0
 for p in range(a, b):
-    if check(str(p)):
-        count += 1
-print(count)
+    ct += check(str(p))
+print(ct)
