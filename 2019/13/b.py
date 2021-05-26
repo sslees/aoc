@@ -6,11 +6,6 @@ from utils.intcode import Computer
 
 
 class Game:
-    def __init__(self):
-        self.bricks = set()
-        self.paddle = None
-        self.ball = None
-
     def move(self):
         if self.paddle > self.ball:
             return -1  # left
@@ -36,19 +31,17 @@ def main():
             break
         val, y, x = io.pop(), io.pop(), io.pop()
         if x == -1 and y == 0:
-            game.score = val
+            score = val
             # stdscr.addstr(0, 0, "score: {}".format(val))
         else:
-            if val == 2:
-                game.bricks.add((x, y))
-            elif val == 3:
+            if val == 3:
                 game.paddle = x
             elif val == 4:
                 game.ball = x
             # stdscr.addch(y + 1, x, " #=To"[val])
         # stdscr.refresh()
-    # return game.score
-    print(game.score)
+    # return score
+    print(score)
 
 
 if __name__ == "__main__":
