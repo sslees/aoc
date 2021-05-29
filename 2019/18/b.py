@@ -6,10 +6,13 @@ import networkx as nx
 
 
 def main():
-    print(0)  # TODO
-    return
-    with open("inputB.txt") as f:
+    with open("input.txt") as f:
         data = [l.strip() for l in f.readlines()]
+    r, c = len(data) // 2, len(data[0]) // 2
+    data[r - 1] = data[r - 1][: c - 1] + "@#@" + data[r - 1][c + 2 :]
+    data[r] = data[r][: c - 1] + "###" + data[r][c + 2 :]
+    data[r + 1] = data[r + 1][: c - 1] + "@#@" + data[r + 1][c + 2 :]
+
     maze = nx.Graph()
     for r, line in enumerate(data):
         for c, ch in enumerate(line):
@@ -24,8 +27,9 @@ def main():
             wt = maze.edges[u, n]["weight"] + maze.edges[n, v]["weight"]
             maze.add_edge(u, v, weight=wt)
             maze.remove_node(n)
-    robots = [n for n, l in maze.nodes.data("label") if l == "@"]  # TODO
+    robots = [n for n, l in maze.nodes.data("label") if l == "@"]
     keys = {n: l for n, l in maze.nodes.data("label") if l.islower()}
+    vaults = [nx.node_connected_component(maze, robot) & set(keys) for robot in robots]
 
     hist = set()
     queue = [(0, 0, robots, set())]
@@ -42,21 +46,23 @@ def main():
         for vault, pos in enumerate(robots):
             hist.add((pos, had))
         for vault, pos in enumerate(robots):
-            for nbr in neighbors(maze, pos):
-                if (nbr, had) not in hist:
-                    lbl = label(maze, nbr)
-                    if not lbl.isupper() or lbl.lower() in have:
-                        rbs = robots.copy()
-                        rbs[vault] = nbr
-                        heappush(
-                            queue,
-                            (
-                                dist + heuristic(nbr, have, keys),
-                                dist + weight(maze, pos, nbr),
-                                rbs,
-                                have,
-                            ),
-                        )
+            opts = [k for k in vaults[vault] if keys[k] not in have]
+            if opts:
+                for nbr in neighbors(maze, pos):
+                    if (nbr, had) not in hist:
+                        lbl = label(maze, nbr)
+                        if not lbl.isupper() or lbl.lower() in have:
+                            rbs = robots.copy()
+                            rbs[vault] = nbr
+                            heappush(
+                                queue,
+                                (
+                                    dist + heuristic(nbr, opts),
+                                    dist + weight(maze, pos, nbr),
+                                    rbs,
+                                    have,
+                                ),
+                            )
 
 
 @cache
@@ -74,8 +80,8 @@ def weight(maze, pos, nbr):
     return maze.edges[pos, nbr]["weight"]
 
 
-def heuristic(pos, have, keys):
-    return min(manhattan(pos, k) for k in keys if keys[k] not in have)
+def heuristic(pos, opts):
+    return min(manhattan(pos, k) for k in opts)
 
 
 @cache
