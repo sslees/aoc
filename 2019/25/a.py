@@ -1,74 +1,70 @@
 #! /usr/bin/env python3
 
-import random
-import re
 from collections import deque
 from utils.intcode import Computer
+import random
+import re
+
+AVOID = "escape pod", "giant electromagnet", "infinite loop", "molten lava", "photons"
+REV = {"north": "south", "east": "west", "south": "north", "west": "east", None: None}
 
 
 class Droid:
-    AVOID = [
-        "escape pod",
-        "giant electromagnet",
-        "infinite loop",
-        "molten lava",
-        "photons",
-    ]
-
     def __init__(self):
-        self.output = []
         self.input = deque()
-        self.room = None
-        self.items = None
-        self.alert = None
+        self.output = []
+        self.explored = False
+        self.hist = {}
+        self.exit = None
         self.inv = []
-        self.state = "collect"
+        self.items = deque()
 
-    def write(self, x):
-        self.output.append(chr(x))
+    def message(self):
+        msg = "".join(map(chr, self.output))
+        self.output.clear()
+        return msg
+
+    def explore(self, msg):
+        if room := re.findall(r"== (.+) ==", msg):
+            self.room = room[-1]
+        if doors := re.findall(r"lead:((\n-.+)+)", msg):
+            self.doors = doors[-1][0].replace("- ", "").strip().splitlines()
+        if item := re.search(r"here:\n- (.+)", msg):
+            item = item[1]
+        if self.room not in self.hist:
+            self.hist[self.room] = [self.exit]
+        hist = self.hist[self.room]
+        if item and item not in AVOID:
+            self.inv.append(item)
+            return "take " + self.inv[-1]
+        elif len(self.inv) == 8 and self.room == "Security Checkpoint":
+            self.explored = next((d for d in self.doors if d != hist[0]))
+        else:
+            dir = next((d for d in self.doors if d not in hist), hist[0])
+            self.exit = REV[dir]
+            if not dir:
+                self.hist = {}
+                return self.explore(msg)
+            if dir not in hist:
+                hist.append(dir)
+            return dir
+
+    def analyze(self, msg):
+        if "lighter" in msg:
+            self.items.append(self.inv.pop(random.randrange(len(self.inv))))
+            return "drop " + self.items[-1]
+        if "heavier" in msg:
+            self.inv.append(self.items.popleft())
+            return "take " + self.inv[-1]
+        return self.explored
 
     def read(self):
         if not self.input:
-            message = "".join(self.output)
-            self.output.clear()
-            if self.state == "collect":
-                # print("C" * 40)
-                if matches := re.findall(r"== (.+) ==", message):
-                    self.room = matches[-1]
-                if matches := re.findall(r"lead:((\n-.+)+)", message):
-                    self.doors = matches[-1][0].replace("- ", "").strip().splitlines()
-                if matches := re.findall(r"here:((\n-.+)+)", message):
-                    self.items = matches[-1][0].replace("- ", "").strip().splitlines()
-                    self.items = [e for e in self.items if e not in Droid.AVOID]
-                # print(self.room, self.doors, self.items, end=" ")
-                if self.items:
-                    self.inv.append(self.items.pop())
-                    cmd = "take " + self.inv[-1]
-                elif self.room == "Security Checkpoint" and len(self.inv) == 8:
-                    self.state = "analyze"
-                    return self.read()
-                else:
-                    cmd = random.choice(self.doors)
-            elif self.state == "analyze":
-                # print("A" * 40)
-                if matches := re.findall(r"Alert.+(lighter|heavier)", message):
-                    self.alert = matches[-1]
-                if matches := re.findall(r"lead:((\n-.+)+)", message):
-                    self.doors = matches[-1][0].replace("- ", "").strip().splitlines()
-                if matches := re.findall(r"here:((\n-.+)+)", message):
-                    self.items = matches[-1][0].replace("- ", "").strip().splitlines()
-                # print(self.alert, self.items, end=" ")
-                if self.alert == "lighter":
-                    cmd = "drop " + self.inv.pop(random.randrange(len(self.inv)))
-                    self.alert = None
-                elif self.alert == "heavier":
-                    self.inv.append(self.items.pop(random.randrange(len(self.items))))
-                    cmd = "take " + self.inv[-1]
-                    self.alert = None
-                else:
-                    cmd = random.choice(self.doors)
-            # print("Command? " + cmd)
-            # print(message, end="")
+            msg = self.message()
+            if not self.explored:
+                cmd = self.explore(msg)
+            if self.explored:
+                cmd = self.analyze(msg)
             self.input.extend(cmd + "\n")
         return ord(self.input.popleft())
 
@@ -77,11 +73,10 @@ def main():
     with open("input.txt") as f:
         prog = list(map(int, f.readline().split(",")))
     droid = Droid()
-    comp = Computer(prog, droid.read, droid.write)
+    comp = Computer(prog, droid.read, droid.output.append)
     while comp.step():
         pass
-    # print("".join(droid.output))
-    print(re.search(r"typing (\d+)", "".join(droid.output)).group(1))
+    print(re.search(r"typing (\d+)", droid.message())[1])
 
 
 if __name__ == "__main__":
