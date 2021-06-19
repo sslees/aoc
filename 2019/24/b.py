@@ -19,13 +19,13 @@ class RecursiveAuto(cells.Automaton):
                     nbrs.extend((x, 0, d + 1) for x in range(5))
                 else:  # cy == 3
                     nbrs.extend((x, 4, d + 1) for x in range(5))
-            elif nx < 0:
+            elif nx == -1:
                 nbrs.append((1, 2, d - 1))
-            elif nx > 4:
+            elif nx == 5:
                 nbrs.append((3, 2, d - 1))
-            elif ny < 0:
+            elif ny == -1:
                 nbrs.append((2, 1, d - 1))
-            elif ny > 4:
+            elif ny == 5:
                 nbrs.append((2, 3, d - 1))
             else:
                 nbrs.append((nx, ny, d))
@@ -33,17 +33,17 @@ class RecursiveAuto(cells.Automaton):
 
 
 def main():
-    with open("inputG.txt") as f:
+    with open("input.txt") as f:
         lines = [l.strip() for l in f.readlines()]
     bugs = {}
     for r, line in enumerate(lines):
         for c, char in enumerate(line):
             bugs[c, r, 0] = char == "#"
+    del bugs[2, 2, 0]
     auto = RecursiveAuto(bugs, neighborhood=cells.VNEUMANN, rule=([1, 2], [1]))
     for _ in range(200):
         auto.step()
     print(auto.population())
-    # inputG < 1945
 
 
 if __name__ == "__main__":
