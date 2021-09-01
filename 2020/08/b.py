@@ -7,7 +7,7 @@ def run(prog):
     seen = set()
     while True:
         if ptr in seen:
-            return None
+            return
         seen.add(ptr)
         ins, val = prog[ptr].split()
         val = int(val)
