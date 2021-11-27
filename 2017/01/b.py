@@ -2,10 +2,11 @@
 
 
 def main(data: str):
-    lines = [l.strip() for l in data.splitlines()]
-    for l in lines:
-        print(l)
-    return 0
+    ct = 0
+    for i, c in enumerate(data):
+        if c == data[(i + len(data) // 2) % len(data)]:
+            ct += int(c)
+    return ct
 
 
 if __name__ == "__main__":

@@ -29,6 +29,7 @@ setup(
             "pylint",
             "rope",
         ],
+        "test": ["pytest"],
         "viz": [
             "jupyter",
             "matplotlib",
