@@ -37,5 +37,6 @@ setup(
         ],
     },
     packages=find_packages(),
-    entry_points={"adventofcode.user": ["sslees = utils.plugins:solve"]},
+    entry_points={"adventofcode.user": ["sslees = extras.plugins:solve"]},
+    scripts=["extras/mkaoc"],
 )
