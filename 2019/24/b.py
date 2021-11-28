@@ -32,9 +32,8 @@ class RecursiveAuto(cells.Automaton):
         return nbrs
 
 
-def main():
-    with open("input.txt") as f:
-        lines = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    lines = data.splitlines()
     bugs = {}
     for r, line in enumerate(lines):
         for c, char in enumerate(line):
@@ -43,8 +42,10 @@ def main():
     auto = RecursiveAuto(bugs, neighborhood=cells.VNEUMANN, rule=([1, 2], [1]))
     for _ in range(200):
         auto.step()
-    print(auto.population())
+    return auto.population()
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

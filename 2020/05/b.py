@@ -7,15 +7,16 @@ def sid(code):
     return row * 8 + col
 
 
-def main():
-    with open("input.txt") as f:
-        codes = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    codes = data.splitlines()
     seats = set()
     for s in map(sid, codes):
         seats.add(s)
     (seat,) = {s for s in range(min(seats), max(seats) + 1)} - seats
-    print(seat)
+    return seat
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

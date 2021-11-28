@@ -12,9 +12,7 @@ def opts(tile):
         tile[:] = map("".join, zip(*tile))  # transpose
 
 
-def main():
-    with open("input.txt") as f:
-        data = f.read().rstrip("\r\n")
+def solve(data: str):
     nbrs = defaultdict(set)
     for o in data.split("\n\n"):
         num = int(o[5:9])
@@ -22,8 +20,10 @@ def main():
         for o in opts(tile):
             nbrs[o[0]].add(num)
     cts = Counter(p for e in nbrs.values() if len(e) > 1 for p in e)
-    print(math.prod(e for e in cts if cts[e] == 4))
+    return math.prod(e for e in cts if cts[e] == 4)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

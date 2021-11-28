@@ -3,9 +3,8 @@
 from utils.intcode import Computer
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     io = []
     comp = Computer(prog, None, io.append)
     while comp.step():
@@ -19,8 +18,10 @@ def main():
                 for i, j, in [(-1, 0), (0, -1), (0, 0), (0, 1), (1, 0)]
             ):
                 parameters.append(r * c)
-    print(sum(parameters))
+    return sum(parameters)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

@@ -30,7 +30,7 @@ class Controller:
         cmds = nx.algorithms.shortest_paths.generic.shortest_path_length(
             self.g, (0, 0), self.finish
         )
-        print(cmds)
+        self.result = cmds
 
     def status(self, code):
         if code == 0:  # wall
@@ -44,14 +44,16 @@ class Controller:
             self.pos = self.nxt
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     ctrl = Controller()
     comp = Computer(prog, ctrl.command, ctrl.status)
     while comp.step():
         pass
+    return ctrl.result
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

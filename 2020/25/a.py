@@ -4,18 +4,17 @@ P = 20201227
 G = 7
 
 
-def main():
-    with open("input.txt") as f:
-        ap, bp = [int(l.strip()) for l in f.readlines()]
+def solve(data: str):
+    ap, bp = [int(l) for l in data.splitlines()]
     for a in range(1, P):
         p = pow(G, a, P)
         if p == ap:
-            print(pow(bp, a, P))
-            break
+            return pow(bp, a, P)
         if p == bp:
-            print(pow(ap, a, P))
-            break
+            return pow(ap, a, P)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

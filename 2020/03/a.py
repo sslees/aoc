@@ -1,11 +1,10 @@
 #! /bin/env python3
 
 
-def main():
+def solve(data: str):
     dx = 3
     dy = 1
-    with open("input.txt") as f:
-        m = [l.strip() for l in f.readlines()]
+    m = [l.strip() for l in data.splitlines()]
     x = 0
     y = 0
     mx = len(m[1])
@@ -17,8 +16,10 @@ def main():
         x += dx
         x = x % mx
         y += dy
-    print(count)
+    return count
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

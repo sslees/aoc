@@ -14,11 +14,17 @@ def calc(planet):
     return indirects[planet]
 
 
-with open("input.txt") as f:
+def solve(data: str):
     count = 0
-    for l in f.readlines():
-        inner, outer = l.strip().split(")")
+    for l in data.splitlines():
+        inner, outer = l.split(")")
         orbits[outer] = inner
     for o in orbits:
         count += calc(o)
-    print(count)
+    return count
+
+
+if __name__ == "__main__":
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

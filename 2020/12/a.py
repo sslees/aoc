@@ -1,9 +1,8 @@
 #! /bin/env python3
 
 
-def main():
-    with open("input.txt") as f:
-        lines = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    lines = data.splitlines()
     x, y = 0, 0
     d = 0
     for l in lines:
@@ -31,8 +30,10 @@ def main():
                 x -= val
             elif d == 270:
                 y -= val
-    print(abs(x) + abs(y))
+    return abs(x) + abs(y)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

@@ -3,9 +3,8 @@
 import re
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     mem = [0] * 652_010
     for l in data:
         if "mask" in l:
@@ -16,8 +15,10 @@ def main():
             addr, val = map(int, re.search(r"mem\[(\d+)\] = (\d+)", l).groups())
             adj = (val | ones) & zeros
             mem[addr] = adj
-    print(sum(mem))
+    return sum(mem)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

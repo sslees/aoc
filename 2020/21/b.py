@@ -3,9 +3,8 @@
 import re
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     srcs = {}
     for l in data:
         ingrs, alrgs = re.match(r"(.+) \(contains (.+)\)", l).groups()
@@ -23,8 +22,10 @@ def main():
                 for a in set(srcs) - {alrg}:
                     if ingr in srcs[a]:
                         srcs[a].remove(ingr)
-    print(",".join((next(iter(srcs[alrg])) for alrg in sorted(srcs))))
+    return ",".join((next(iter(srcs[alrg])) for alrg in sorted(srcs)))
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

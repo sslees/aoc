@@ -23,12 +23,11 @@ def valid(p):
     return valid
 
 
-def main():
-    with open("input.txt") as f:
-        d = f.read()
-    ps = d.split("\n\n")
-    print(len([p for p in ps if valid(p)]))
+def solve(data: str):
+    return len([p for p in data.split("\n\n") if valid(p)])
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

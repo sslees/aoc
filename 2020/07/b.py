@@ -11,9 +11,8 @@ def contents(rules, outer):
     )
 
 
-def main():
-    with open("input.txt") as f:
-        lines = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    lines = data.splitlines()
     rules = {}
     for line in lines:
         outer, inners = re.match(r"(.+) bags contain (.+)\.", line).groups()
@@ -22,8 +21,10 @@ def main():
             count, color = re.match(r"(\d+|no) (.+) bags?", inner).groups()
             inners[i] = (int(count.replace("no", "0")), color)
         rules[outer] = inners
-    print(contents(rules, "shiny gold"))
+    return contents(rules, "shiny gold")
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

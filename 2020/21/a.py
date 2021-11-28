@@ -4,9 +4,8 @@ from collections import Counter
 import re
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     srcs = {}
     cts = Counter()
     for l in data:
@@ -30,8 +29,10 @@ def main():
     for src in srcs.values():
         (ingr,) = src
         del cts[ingr]
-    print(sum(cts.values()))
+    return sum(cts.values())
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

@@ -5,11 +5,9 @@ import math
 import re
 
 
-def main():
-    with open("input.txt") as f:
-        notes = f.read().rstrip("\r\n")
+def solve(data: str):
     rules = {}
-    for bound in re.findall(r"(?:\w|[ ])+:[^\n]+", notes):
+    for bound in re.findall(r"(?:\w|[ ])+:[^\n]+", data):
         name, rule = bound.split(": ")
         a, b = rule.split(" or ")
         a1, a2 = a.split("-")
@@ -19,10 +17,10 @@ def main():
             lambda v=None, a1=a1, a2=a2, b1=b1, b2=b2: a1 <= v <= a2 or b1 <= v <= b2
         )
 
-    mine = re.search(r"your ticket:\n(\d+[,\n])+", notes).group(0)
+    mine = re.search(r"your ticket:\n(\d+[,\n])+", data).group(0)
     mine = list(map(int, re.findall(r"\d+", mine)))
 
-    nearby = re.search(r"nearby tickets:\n(\d+[,\n]?)+", notes).group(0)
+    nearby = re.search(r"nearby tickets:\n(\d+[,\n]?)+", data).group(0)
     nearby = nearby.removeprefix("nearby tickets:\n").strip().split("\n")
     nearby = (list(map(int, n.split(","))) for n in nearby)
     nearby = [
@@ -40,8 +38,10 @@ def main():
         candidates[name] = pos - taken
         taken.update(candidates[name])
     fields = (mine[next(iter(v))] for k, v in candidates.items() if "departure" in k)
-    print(math.prod(fields))
+    return math.prod(fields)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

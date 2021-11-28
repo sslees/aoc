@@ -17,9 +17,8 @@ def floaters(addr, exes):
         yield adj
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     mem = defaultdict(lambda: 0)
     for l in data:
         if "mask" in l:
@@ -30,8 +29,10 @@ def main():
             addr, val = map(int, re.search(r"mem\[(\d+)\] = (\d+)", l).groups())
             for adj in floaters(addr | ones, exes):
                 mem[adj] = val
-    print(sum(mem.values()))
+    return sum(mem.values())
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

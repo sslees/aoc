@@ -25,9 +25,8 @@ class Robot:
         self.y += 1 if self.dir == 90 else -1 if self.dir == 270 else 0
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     robo = Robot()
     io = []
     comp = Computer(prog, robo.camera, io.append)
@@ -40,8 +39,10 @@ def main():
         while not io:
             comp.step()
         robo.turn(io.pop())
-    print(len(robo.painted))
+    return len(robo.painted)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

@@ -4,9 +4,8 @@ CUPS = 1_000_000
 MOVES = 10_000_000
 
 
-def main():
-    with open("input.txt") as f:
-        cups = [int(c) for c in f.readline().strip()]
+def solve(data: str):
+    cups = [int(c) for c in data]
     after = {}
     cur = CUPS
     for cup in cups:
@@ -24,8 +23,10 @@ def main():
             dest = dest - 1 if dest > 1 else CUPS
         after[c] = after[dest]
         after[dest] = a
-    print(after[1] * after[after[1]])
+    return after[1] * after[after[1]]
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

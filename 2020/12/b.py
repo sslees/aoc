@@ -1,9 +1,8 @@
 #! /bin/env python3
 
 
-def main():
-    with open("input.txt") as f:
-        lines = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    lines = data.splitlines()
     x, y = 0, 0
     wx, wy = 10, 1
     for l in lines:
@@ -43,8 +42,10 @@ def main():
         if cmd == "F":
             x += wx * val
             y += wy * val
-    print(abs(x) + abs(y))
+    return abs(x) + abs(y)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

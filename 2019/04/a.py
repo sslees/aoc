@@ -13,10 +13,15 @@ def check(s):
     return False
 
 
-with open("input.txt") as f:
-    data = f.readline().strip()
-a, b = parse("{:d}-{:d}", data)
-ct = 0
-for p in range(a, b):
-    ct += check(str(p))
-print(ct)
+def solve(data: str):
+    a, b = parse("{:d}-{:d}", data)
+    ct = 0
+    for p in range(a, b):
+        ct += check(str(p))
+    return ct
+
+
+if __name__ == "__main__":
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

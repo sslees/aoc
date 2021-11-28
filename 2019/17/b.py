@@ -56,9 +56,8 @@ class Robot:
         return self.actions
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     write = []
     comp = Computer(prog, None, write.append)
     while comp.step():
@@ -85,8 +84,10 @@ def main():
     comp.mem[0] = 2
     while comp.step():
         pass
-    print(write[-1])
+    return write[-1]
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

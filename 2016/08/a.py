@@ -3,9 +3,8 @@
 from parse import parse
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     MX, MY = 50, 6
     disp = [[0] * MX for _ in range(MY)]
     for l in data:
@@ -26,8 +25,10 @@ def main():
                 tmp[(y + n) % MY, x] = disp[y][x]
             for y, x in tmp:
                 disp[y][x] = tmp[y, x]
-    print(sum(map(sum, disp)))
+    return sum(map(sum, disp))
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

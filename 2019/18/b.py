@@ -5,9 +5,8 @@ from heapq import heappop, heappush
 import networkx as nx
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     r, c = len(data) // 2, len(data[0]) // 2
     data[r - 1] = data[r - 1][: c - 1] + "@#@" + data[r - 1][c + 2 :]
     data[r] = data[r][: c - 1] + "###" + data[r][c + 2 :]
@@ -40,7 +39,7 @@ def main():
                 have = have.copy()
                 have.add(keys[pos])
                 if len(have) == len(keys):
-                    print(dist)
+                    return dist
                     return
         had = frozenset(have)
         for vault, pos in enumerate(robots):
@@ -91,4 +90,6 @@ def manhattan(a, b):
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

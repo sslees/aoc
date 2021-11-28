@@ -4,9 +4,8 @@ from itertools import permutations
 from utils.intcode import Computer
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     signals = []
     for phases in permutations(range(5, 10)):
         comps = {}
@@ -22,8 +21,10 @@ def main():
                 while not io:
                     comp.step()
         signals.append(io.pop())
-    print(max(signals))
+    return max(signals)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

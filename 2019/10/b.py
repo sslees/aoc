@@ -27,9 +27,8 @@ def ordered(station, locs):
     return [order[o] for o in sorted(order)]
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     locs = set()
     Pt = namedtuple("Pt", ("x", "y"))
     for r, line in enumerate(data):
@@ -38,8 +37,10 @@ def main():
                 locs.add(Pt(c, -r))
     station = max(locs, key=lambda l: visible(l, locs))
     winner = ordered(station, locs)[199]
-    print(winner.x * 100 - winner.y)
+    return winner.x * 100 - winner.y
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

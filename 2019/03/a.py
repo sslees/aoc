@@ -1,8 +1,9 @@
 #! /usr/bin/env python3
 
-with open("input.txt") as f:
+
+def solve(data: str):
     wires = []
-    for line in f.readlines():
+    for line in data.splitlines():
         last = (0, 0)
         points = set()
         for segment in line.split(","):
@@ -25,4 +26,10 @@ with open("input.txt") as f:
                     last = (last[0] + 1, last[1])
                     points.add(last)
         wires.append(points)
-    print(min(map(lambda p: abs(p[0]) + abs(p[1]), wires[0] & wires[1])))
+    return min(map(lambda p: abs(p[0]) + abs(p[1]), wires[0] & wires[1]))
+
+
+if __name__ == "__main__":
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

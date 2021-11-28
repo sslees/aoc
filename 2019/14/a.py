@@ -18,18 +18,19 @@ def ore(recipes, extras, units, recipe):
     return sum(ore(recipes, extras, i[0] * reactions, i[1]) for i in inputs)
 
 
-def main():
+def solve(data: str):
     recipes = {}
-    with open("input.txt") as f:
-        for l in f.readlines():
-            inputs, output = l.split(" => ")
-            increment, recipe = output.split()
-            recipes[recipe] = (
-                int(increment),
-                [(int(i.split()[0]), i.split()[1]) for i in inputs.split(", ")],
-            )
-    print(ore(recipes, {}, 1, "FUEL"))
+    for l in data.splitlines():
+        inputs, output = l.split(" => ")
+        increment, recipe = output.split()
+        recipes[recipe] = (
+            int(increment),
+            [(int(i.split()[0]), i.split()[1]) for i in inputs.split(", ")],
+        )
+    return ore(recipes, {}, 1, "FUEL")
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

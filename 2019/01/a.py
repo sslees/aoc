@@ -1,7 +1,14 @@
 #! /usr/bin/env python3
 
-with open("input.txt") as f:
+
+def solve(data: str):
     total = 0
-    for line in f.readlines():
+    for line in data.splitlines():
         total += int(line) // 3 - 2
-    print(total)
+    return total
+
+
+if __name__ == "__main__":
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

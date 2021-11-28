@@ -12,9 +12,8 @@ def containers(outers, inner, seen=[]):
     return list(set(ret))
 
 
-def main():
-    with open("input.txt") as f:
-        lines = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    lines = data.splitlines()
     rules = {}
     for line in lines:
         outer, inners = re.match(r"(.+) bags contain (.+)\.", line).groups()
@@ -30,8 +29,10 @@ def main():
     for outer, inners in rules.items():
         for inner in inners:
             outers[inner[1]].append(outer)
-    print(len(containers(outers, "shiny gold")))
+    return len(containers(outers, "shiny gold"))
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

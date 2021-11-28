@@ -3,9 +3,8 @@
 from utils.intcode import Computer
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     for verb in range(100):
         for noun in range(100):
             comp = Computer(prog)
@@ -14,9 +13,11 @@ def main():
             while comp.step():
                 pass
             if comp.mem[0] == 19690720:
-                print(100 * noun + verb)
+                return 100 * noun + verb
                 break
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

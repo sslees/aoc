@@ -10,13 +10,14 @@ def pattern(i):
     return pat
 
 
-def main():
-    with open("input.txt") as f:
-        data = [int(c) for c in f.readline().strip()]
+def solve(data: str):
+    data = [int(c) for c in data]
     for _ in range(100):
         data = [abs(sum(map(mul, data, pattern(i)))) % 10 for i in range(len(data))]
-    print("".join(map(str, data[:8])))
+    return "".join(map(str, data[:8]))
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

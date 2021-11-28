@@ -3,6 +3,8 @@
 from functools import cache
 from itertools import product
 
+rules = {}
+
 
 @cache
 def possible(i=0):
@@ -19,10 +21,15 @@ def _poss(i):
                 yield "".join(perm)
 
 
-with open("input.txt") as f:
-    rule, msgs = f.read().split("\n\n")
-rules = {}
-for r in rule.split("\n"):
-    i, r = r.split(": ")
-    rules[int(i)] = [s.split() for s in r.split(" | ")]
-print(len(set(possible()) & set(msgs.split("\n"))))
+def solve(data: str):
+    rule, msgs = data.split("\n\n")
+    for r in rule.split("\n"):
+        i, r = r.split(": ")
+        rules[int(i)] = [s.split() for s in r.split(" | ")]
+    return len(set(possible()) & set(msgs.split("\n")))
+
+
+if __name__ == "__main__":
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

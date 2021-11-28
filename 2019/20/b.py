@@ -5,9 +5,8 @@ import networkx as nx
 import re
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l[:-1] for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     base = nx.Graph()
     for r, line in enumerate(data):
         for c, ch in enumerate(line):
@@ -53,11 +52,13 @@ def main():
         try:
             edge = (0, outer["AA"]), (0, outer["ZZ"])
             len = nx.shortest_path_length(maze, *edge, "weight")
-            print(len)
+            return len
             break
         except:
             pass
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

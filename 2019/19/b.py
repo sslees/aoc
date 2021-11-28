@@ -13,9 +13,8 @@ def check(prog, x, y):
     return io.pop()
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     x, y = 99, 0
     while True:
         while not check(prog, x, y):
@@ -23,8 +22,10 @@ def main():
         if check(prog, x - 99, y + 99):
             break
         x += 1 if check(prog, x, y + 99) else 100
-    print((x - 99) * 10_000 + y)
+    return (x - 99) * 10_000 + y
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

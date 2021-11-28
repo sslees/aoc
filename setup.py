@@ -17,25 +17,11 @@ setup(
         "Programming Language :: Python :: 3",
         "Topic :: Games/Entertainment :: Puzzle Games",
     ],
-    install_requires=[
-        "advent-of-code-data >= 0.3",
-        "networkx",
-        "parse",
-    ],
+    install_requires=["advent-of-code-data >= 0.3", "networkx", "parse"],
     extras_require={
-        "dev": [
-            "black",
-            "line_profiler",
-            "pylint",
-            "rope",
-        ],
+        "dev": ["black", "line_profiler", "pylint", "rope"],
         "test": ["pytest"],
-        "viz": [
-            "jupyter",
-            "matplotlib",
-            "pygraphviz",
-            "scipy",
-        ],
+        "viz": ["jupyter", "matplotlib", "pygraphviz", "scipy"],
     },
     packages=find_packages(),
     entry_points={"adventofcode.user": ["sslees = extras.plugins:solve"]},

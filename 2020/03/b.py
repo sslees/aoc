@@ -3,11 +3,10 @@
 import math
 
 
-def main():
+def solve(data: str):
     trees = []
     for dx, dy in (1, 1), (3, 1), (5, 1), (7, 1), (1, 2):
-        with open("input.txt") as f:
-            m = [l.strip() for l in f.readlines()]
+        m = [l.strip() for l in data.splitlines()]
         x = 0
         y = 0
         mx = len(m[1])
@@ -20,8 +19,10 @@ def main():
             x = x % mx
             y += dy
         trees.append(count)
-    print(math.prod(trees))
+    return math.prod(trees)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

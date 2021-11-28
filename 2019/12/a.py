@@ -4,9 +4,8 @@ from itertools import combinations
 from parse import parse
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     moons = [(list(parse("<x={:d}, y={:d}, z={:d}>", l)), [0, 0, 0]) for l in data]
     for _ in range(1_000):
         for (p1, v1), (p2, v2) in combinations(moons, 2):
@@ -15,8 +14,10 @@ def main():
                 v2[i] = v2[i] + (1 if p2[i] < p1[i] else -1 if p2[i] > p1[i] else 0)
         for p, v in moons:
             p[:] = map(sum, zip(p, v))
-    print(sum(sum(map(abs, p)) * sum(map(abs, v)) for p, v in moons))
+    return sum(sum(map(abs, p)) * sum(map(abs, v)) for p, v in moons)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

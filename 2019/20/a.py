@@ -5,9 +5,8 @@ import networkx as nx
 import re
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l[:-1] for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     maze = nx.Graph()
     for r, line in enumerate(data):
         for c, ch in enumerate(line):
@@ -36,8 +35,10 @@ def main():
     for tiles in portals.values():
         if len(tiles) == 2:
             maze.add_edge(*tiles, weight=1)
-    print(nx.shortest_path_length(maze, portals["AA"][0], portals["ZZ"][0], "weight"))
+    return nx.shortest_path_length(maze, portals["AA"][0], portals["ZZ"][0], "weight")
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

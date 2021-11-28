@@ -3,9 +3,8 @@
 from utils.intcode import Computer
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     io = []
     comp = Computer(prog, None, io.append)
     bricks = 0
@@ -16,8 +15,10 @@ def main():
             break
         val, _, _ = io.pop(), io.pop(), io.pop()
         bricks += val == 2
-    print(bricks)
+    return bricks
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

@@ -3,9 +3,8 @@
 MOVES = 100
 
 
-def main():
-    with open("input.txt") as f:
-        cups = [int(c) for c in f.readline().strip()]
+def solve(data: str):
+    cups = [int(c) for c in data]
     after = {}
     cur = cups[-1]
     for cup in cups:
@@ -23,8 +22,10 @@ def main():
     order = [after[1]]
     for _ in range(len(cups) - 2):
         order.append(after[order[-1]])
-    print("".join(map(str, order)))
+    return "".join(map(str, order))
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

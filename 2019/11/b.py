@@ -24,9 +24,8 @@ class Robot:
         self.y += 1 if self.dir == 90 else -1 if self.dir == 270 else 0
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     robo = Robot()
     robo.panels[0, 0] = 1
     io = []
@@ -40,8 +39,10 @@ def main():
         while not io:
             comp.step()
         robo.turn(io.pop())
-    print(ocr.scan(robo.panels))
+    return ocr.scan(robo.panels)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

@@ -5,9 +5,8 @@ from heapq import heappop, heappush
 import networkx as nx
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     maze = nx.Graph()
     for r, line in enumerate(data):
         for c, ch in enumerate(line):
@@ -33,7 +32,7 @@ def main():
             have = have.copy()
             have.add(keys[pos])
             if len(have) == len(keys):
-                print(dist)
+                return dist
                 break
         had = frozenset(have)
         hist.add((pos, had))
@@ -78,4 +77,6 @@ def manhattan(a, b):
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

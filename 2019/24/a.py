@@ -3,9 +3,8 @@
 import utils.cells as cells
 
 
-def main():
-    with open("input.txt") as f:
-        lines = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    lines = data.splitlines()
     bugs = {}
     for r, line in enumerate(lines):
         for c, char in enumerate(line):
@@ -20,8 +19,10 @@ def main():
         if state in states:
             break
         states.add(state)
-    print(sum(2 ** i for i, ch in enumerate(state.replace("\n", "")) if ch == "#"))
+    return sum(2 ** i for i, ch in enumerate(state.replace("\n", "")) if ch == "#")
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

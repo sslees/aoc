@@ -3,13 +3,16 @@
 from utils.intcode import Computer
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
-    comp = Computer(prog, [1].pop, print)
+def solve(data: str):
+    io = [1]
+    prog = list(map(int, data.split(",")))
+    comp = Computer(prog, io.pop, io.append)
     while comp.step():
         pass
+    return io[0]
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

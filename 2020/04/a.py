@@ -1,12 +1,9 @@
 #! /bin/env python3
 
 
-def main():
-    with open("input.txt") as f:
-        d = f.read()
-    ps = d.split("\n\n")
+def solve(data: str):
     count = 0
-    for p in ps:
+    for p in data.split("\n\n"):
         if (
             "byr" in p
             and "iyr" in p
@@ -15,11 +12,12 @@ def main():
             and "hcl" in p
             and "ecl" in p
             and "pid" in p
-            # p.contains("cid")
         ):
             count += 1
-    print(count)
+    return count
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

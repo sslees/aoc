@@ -7,11 +7,12 @@ def sid(code):
     return row * 8 + col
 
 
-def main():
-    with open("input.txt") as f:
-        codes = [l.strip() for l in f.readlines()]
-    print(max(map(sid, codes)))
+def solve(data: str):
+    codes = data.splitlines()
+    return max(map(sid, codes))
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

@@ -3,9 +3,8 @@
 TURNS = 2020
 
 
-def main():
-    with open("input.txt") as f:
-        data = [int(s) for s in f.readline().split(",")]
+def solve(data: str):
+    data = [int(s) for s in data.split(",")]
     said = [0] * (TURNS - 1)
     for i, d in enumerate(data, 1):
         said[d] = i
@@ -14,8 +13,10 @@ def main():
         says = say
         say = turn - said[says] if said[says] else 0
         said[says] = turn
-    print(says)
+    return says
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

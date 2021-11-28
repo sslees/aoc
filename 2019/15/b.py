@@ -33,7 +33,7 @@ class Controller:
             self.g.to_undirected(), self.finish
         )
         path = max(paths.values(), key=len)
-        print(len(path) - 1)
+        self.result = len(path) - 1
 
     def status(self, code):
         if code == 0:  # wall
@@ -50,14 +50,16 @@ class Controller:
             self.pos = self.nxt
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     ctrl = Controller()
     comp = Computer(prog, ctrl.command, ctrl.status)
     while comp.step():
         pass
+    return ctrl.result
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

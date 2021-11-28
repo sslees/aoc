@@ -11,9 +11,8 @@ def visible(loc, locs):
     return len(angles)
 
 
-def main():
-    with open("input.txt") as f:
-        data = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    data = data.splitlines()
     locs = set()
     Loc = namedtuple("Loc", ("x", "y"))
     for r, line in enumerate(data):
@@ -21,8 +20,10 @@ def main():
             if char == "#":
                 locs.add(Loc(c, -r))
     station = max(locs, key=lambda l: visible(l, locs))
-    print(visible(station, locs))
+    return visible(station, locs)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

@@ -4,11 +4,9 @@ from itertools import combinations, count
 from parse import parse
 
 
-def main():
-    print(0)  # TODO
-    return
-    with open("e1.txt") as f:
-        data = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    return 0  # TODO
+    data = data.splitlines()
     moons = [(list(parse("<x={:d}, y={:d}, z={:d}>", l)), [0, 0, 0]) for l in data]
     hist = [({tuple(p): 0}, {tuple(v): 0}) for p, v in moons]
     for t in count():
@@ -28,4 +26,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

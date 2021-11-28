@@ -1,7 +1,7 @@
 #! /bin/env python3
 
 
-def main(data: str):
+def solve(data: str):
     ct = 0
     for i, c in enumerate(data):
         if c == data[(i + len(data) // 2) % len(data)]:
@@ -12,4 +12,4 @@ def main(data: str):
 if __name__ == "__main__":
     with open("input.txt") as f:
         data = f.read().rstrip("\r\n")
-    print(main(data))
+    print(solve(data))

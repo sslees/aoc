@@ -1,9 +1,8 @@
 #! /bin/env python3
 
 
-def main():
-    with open("input.txt") as f:
-        prog = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    prog = data.splitlines()
     acc = 0
     ptr = 0
     seen = set()
@@ -20,8 +19,10 @@ def main():
             ptr += val
         else:
             ptr += 1
-    print(acc)
+    return acc
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

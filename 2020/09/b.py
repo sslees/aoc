@@ -3,9 +3,8 @@
 from itertools import combinations
 
 
-def main():
-    with open("input.txt") as f:
-        d = [int(l.strip()) for l in f.readlines()]
+def solve(data: str):
+    d = [int(l) for l in data.splitlines()]
     pre = 25
     for i in range(pre, len(d)):
         if not any(
@@ -17,8 +16,10 @@ def main():
         for i in range(len(d) - n + 1):
             seq = d[i : i + n]
             if sum(seq) == target:
-                print(min(seq) + max(seq))
+                return min(seq) + max(seq)
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

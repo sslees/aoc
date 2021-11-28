@@ -3,9 +3,8 @@
 import utils.cells as cells
 
 
-def main():
-    with open("input.txt") as f:
-        lines = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    lines = data.splitlines()
     config = {}
     for r, line in enumerate(lines):
         for c, char in enumerate(line):
@@ -13,8 +12,10 @@ def main():
     auto = cells.Automaton(config, neighborhood=cells.MOORE(3))
     for _ in range(6):
         auto.step()
-    print(auto.population())
+    return auto.population()
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

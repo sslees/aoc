@@ -3,9 +3,8 @@
 from itertools import count
 
 
-def main():
-    with open("input.txt") as f:
-        sched = [l.strip() for l in f.readlines()[1].split(",")]
+def solve(data: str):
+    sched = data.splitlines()[1].split(",")
     rs = {int(n): (int(n) - i) % int(n) for i, n in enumerate(sched) if n != "x"}
     ns = list(sorted(rs))
 
@@ -20,8 +19,10 @@ def main():
                 n *= n2
                 ns.pop()
                 break
-    print(r)
+    return r
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

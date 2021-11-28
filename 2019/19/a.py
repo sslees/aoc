@@ -13,9 +13,8 @@ def check(prog, x, y):
     return io.pop()
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     count = 0
     x = y1 = y2 = 0
     while x < 50:
@@ -31,8 +30,10 @@ def main():
             break
         count += min(y2, 50) - y1
         x += 1
-    print(count)
+    return count
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

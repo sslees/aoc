@@ -13,10 +13,11 @@ def calc(line):
     return int(line)
 
 
-def main():
-    with open("input.txt") as f:
-        print(sum((calc(l.strip()) for l in f.readlines())))
+def solve(data: str):
+    return sum((calc(l) for l in data.splitlines()))
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

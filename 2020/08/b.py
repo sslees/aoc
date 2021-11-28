@@ -22,9 +22,8 @@ def run(prog):
             ptr += 1
 
 
-def main():
-    with open("input.txt") as f:
-        prog = [l.strip() for l in f.readlines()]
+def solve(data: str):
+    prog = data.splitlines()
     prog.append("nop 0")
     for i in range(len(prog)):
         tmp = prog.copy()
@@ -35,8 +34,10 @@ def main():
         else:
             continue
         if acc := run(tmp):
-            print(acc)
+            return acc
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

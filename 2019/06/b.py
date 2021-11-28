@@ -2,11 +2,12 @@
 
 orbits = {}
 
-with open("input.txt") as f:
+
+def solve(data: str):
     you = set()
     san = set()
-    for l in f.readlines():
-        inner, outer = l.strip().split(")")
+    for l in data.splitlines():
+        inner, outer = l.split(")")
         orbits[outer] = inner
     current = "YOU"
     while current in orbits:
@@ -16,4 +17,10 @@ with open("input.txt") as f:
     while current in orbits:
         current = orbits[current]
         san.add(current)
-    print(len(you.symmetric_difference(san)))
+    return len(you.symmetric_difference(san))
+
+
+if __name__ == "__main__":
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

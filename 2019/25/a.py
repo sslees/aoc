@@ -69,15 +69,16 @@ class Droid:
         return ord(self.input.popleft())
 
 
-def main():
-    with open("input.txt") as f:
-        prog = list(map(int, f.readline().split(",")))
+def solve(data: str):
+    prog = list(map(int, data.split(",")))
     droid = Droid()
     comp = Computer(prog, droid.read, droid.output.append)
     while comp.step():
         pass
-    print(re.search(r"typing (\d+)", droid.message())[1])
+    return re.search(r"typing (\d+)", droid.message())[1]
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))

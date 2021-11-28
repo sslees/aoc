@@ -26,9 +26,7 @@ def stitch(tiles, puzzle):
     return lines
 
 
-def main():
-    with open("input.txt") as f:
-        data = f.read().rstrip("\r\n")
+def solve(data: str):
     tiles = {}
     nbrs = defaultdict(set)
     for t in data.split("\n\n"):
@@ -74,8 +72,10 @@ def main():
         if monsters:
             break
     rough = [c for l in stitched for c in l].count("#")
-    print(rough - monsters * [c for l in MONSTER for c in l].count("#"))
+    return rough - monsters * [c for l in MONSTER for c in l].count("#")
 
 
 if __name__ == "__main__":
-    main()
+    with open("input.txt") as f:
+        data = f.read().rstrip("\r\n")
+    print(solve(data))
