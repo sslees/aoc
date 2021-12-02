@@ -1,4 +1,4 @@
-#! /bin/env python3
+#! /usr/bin/env python3
 
 from itertools import count, product
 import networkx as nx

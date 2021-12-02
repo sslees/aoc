@@ -1,4 +1,4 @@
-#! /bin/env python3
+#! /usr/bin/env python3
 
 from itertools import accumulate, cycle, islice, repeat
 from operator import mod

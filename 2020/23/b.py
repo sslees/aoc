@@ -1,4 +1,4 @@
-#! /bin/env python3
+#! /usr/bin/env python3
 
 CUPS = 1_000_000
 MOVES = 10_000_000
