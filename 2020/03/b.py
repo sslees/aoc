@@ -6,7 +6,7 @@ import math
 def solve(data: str):
     trees = []
     for dx, dy in (1, 1), (3, 1), (5, 1), (7, 1), (1, 2):
-        m = [l.strip() for l in data.splitlines()]
+        m = data.splitlines()
         x = 0
         y = 0
         mx = len(m[1])

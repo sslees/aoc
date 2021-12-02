@@ -4,7 +4,7 @@
 def solve(data: str):
     dx = 3
     dy = 1
-    m = [l.strip() for l in data.splitlines()]
+    m = data.splitlines()
     x = 0
     y = 0
     mx = len(m[1])
