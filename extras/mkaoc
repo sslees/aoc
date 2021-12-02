@@ -1,9 +1,5 @@
 #! /bin/bash
 
-AOC=~/code/python/aoc
-TEMPLATE=$AOC/extras/_template.py
-
-
 if ! type -P aocd > /dev/null
 then
     echo "mkaoc: command not found: aocd"
@@ -16,14 +12,17 @@ then
     exit 1
 fi
 
+AOC=~/code/python/aoc
 YEAR=$1
 DAY=$2
 DEST="$AOC/$YEAR/$DAY"
+TEMPLATES=$AOC/extras/templates
 
 python3 -m webbrowser https://adventofcode.com/$YEAR/day/$(($DAY))
 mkdir -p $DEST
-if [ ! -f $DEST/a.py ]; then cp $TEMPLATE $DEST/a.py; fi
-if [ ! -f $DEST/b.py ]; then cp $TEMPLATE $DEST/b.py; fi
-if [ ! -f $DEST/e1.txt ]; then touch $DEST/e1.txt; fi
+if [ ! -f $DEST/a.py ]; then cp $TEMPLATES/a.py $DEST; fi
+if [ ! -f $DEST/b.py ]; then cp $TEMPLATES/b.py $DEST; fi
 if [ ! -f $DEST/input.txt ]; then aocd $DAY $YEAR > $DEST/input.txt; fi
-code -r $AOC $DEST/a.py $DEST/e1.txt $DEST/input.txt
+if [ ! -f $DEST/test_a.py ]; then cp $TEMPLATES/test_a.py $DEST; fi
+if [ ! -f $DEST/test_b.py ]; then cp $TEMPLATES/test_b.py $DEST; fi
+code -r $AOC $DEST/a.py $DEST/input.txt $DEST/test_a.txt
