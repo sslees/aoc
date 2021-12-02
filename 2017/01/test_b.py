@@ -1,21 +1,26 @@
-from b import main
+from b import solve
+import pytest
 
 
 def test1():
-    assert main("1212") == 6
+    assert solve("1212") == 6
 
 
 def test2():
-    assert main("1221") == 0
+    assert solve("1221") == 0
 
 
 def test3():
-    assert main("123425") == 4
+    assert solve("123425") == 4
 
 
 def test4():
-    assert main("123123") == 12
+    assert solve("123123") == 12
 
 
 def test5():
-    assert main("12131415") == 4
+    assert solve("12131415") == 4
+
+
+if __name__ == "__main__":
+    pytest.main([__file__])
