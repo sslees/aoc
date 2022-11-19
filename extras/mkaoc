@@ -8,7 +8,7 @@ fi
 
 if [ $# -ne 2 ]
 then
-    echo "usage: mkaoc year day"
+    echo "usage: mkaoc YYYY DD"
     exit 1
 fi
 
@@ -18,11 +18,23 @@ DAY=$2
 DEST="$AOC/$YEAR/$DAY"
 TEMPLATES=$AOC/extras/templates
 
-python3 -m webbrowser https://adventofcode.com/$YEAR/day/$(($DAY))
+python3 -m webbrowser https://adventofcode.com/$YEAR/day/$(($DAY)) > /dev/null
 mkdir -p $DEST
-if [ ! -f $DEST/a.py ]; then cp $TEMPLATES/a.py $DEST; fi
-if [ ! -f $DEST/b.py ]; then cp $TEMPLATES/b.py $DEST; fi
-if [ ! -f $DEST/input.txt ]; then aocd $DAY $YEAR > $DEST/input.txt; fi
-if [ ! -f $DEST/test_a.py ]; then cp $TEMPLATES/test_a.py $DEST; fi
-if [ ! -f $DEST/test_b.py ]; then cp $TEMPLATES/test_b.py $DEST; fi
+if [ ! -f $DEST/a.py ]; then
+    cp $TEMPLATES/p.py $DEST/a.py;
+    sed -i "s/part=\"p\", day=d, year=yyyy/part=\"a\", day=$DAY, year=$YEAR/" $DEST/a.py;
+fi
+if [ ! -f $DEST/b.py ]; then
+    cp $TEMPLATES/p.py $DEST/b.py;
+    sed -i "s/part=\"p\", day=d, year=yyyy/part=\"b\", day=$DAY, year=$YEAR/" $DEST/b.py;
+fi
+if [ ! -f $DEST/test_a.py ]; then
+    cp $TEMPLATES/test_p.py $DEST/test_a.py;
+    sed -i "s/from p import/from a import/" $DEST/test_a.py;
+fi
+if [ ! -f $DEST/test_b.py ]; then
+    cp $TEMPLATES/test_p.py $DEST/test_b.py;
+    sed -i "s/from p import/from b import/" $DEST/test_b.py;
+fi
 code -r $AOC $DEST/a.py $DEST/input.txt $DEST/test_a.py
+if [ ! -f $DEST/input.txt ]; then aocd $DAY $YEAR > $DEST/input.txt; fi

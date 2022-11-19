@@ -1,14 +1,14 @@
 #! /usr/bin/env python3
 
-import aocd
-
-from collections import Counter, defaultdict, deque, namedtuple
-from functools import cache
-from itertools import combinations, count, cycle, permutations, product, repeat
-from parse import parse
 import math
 import random
 import re
+from collections import Counter, defaultdict, deque, namedtuple
+from functools import cache
+from itertools import combinations, count, cycle, permutations, product, repeat
+
+import aocd
+from parse import parse
 
 
 def solve(data: str):
@@ -26,4 +26,4 @@ if __name__ == "__main__":
         data = f.read().rstrip("\r\n")
     answer = solve(data)
     print(answer)
-    # aocd.submit(answer, part="b", day=1, year=2021)
+    # aocd.submit(answer, part="p", day=d, year=yyyy)
