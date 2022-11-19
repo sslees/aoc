@@ -36,5 +36,5 @@ if [ ! -f $DEST/test_b.py ]; then
     cp $TEMPLATES/test_p.py $DEST/test_b.py;
     sed -i "s/from p import/from b import/" $DEST/test_b.py;
 fi
-code -r $AOC $DEST/a.py $DEST/input.txt $DEST/test_a.py
+code -r $AOC $DEST/test_a.py $DEST/a.py $DEST/input.txt
 if [ ! -f $DEST/input.txt ]; then aocd $DAY $YEAR > $DEST/input.txt; fi
