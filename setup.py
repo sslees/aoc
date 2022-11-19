@@ -4,7 +4,7 @@ with open("README.md") as f:
     readme = f.read()
 setup(
     name="aoc",
-    version="0.1",
+    version="0.2",
     description="Advent of Code solutions by sslees",
     url="https://github.com/sslees/aoc",
     author="sslees",
@@ -17,7 +17,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Topic :: Games/Entertainment :: Puzzle Games",
     ],
-    install_requires=["advent-of-code-data >= 0.3", "networkx", "parse"],
+    install_requires=["advent-of-code-data >= 1.2", "networkx", "parse"],
     extras_require={
         "dev": ["black", "line_profiler", "pylint", "rope"],
         "test": ["pytest"],
