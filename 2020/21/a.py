@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
-from collections import Counter
 import re
+from collections import Counter
 
 
 def solve(data: str):

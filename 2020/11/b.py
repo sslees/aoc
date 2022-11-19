@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 from functools import cache
+
 import utils.cells as cells
 
 

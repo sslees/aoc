@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 
+import curses
 from collections import defaultdict
 from functools import cache
 from itertools import product
 from time import sleep
-import curses
 
 # neighborhoods
 HEX = [(dx, dy) for dx, dy in product((-1, 0, 1), repeat=2) if dx != dy]

@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
-from functools import cache
 import math
+from functools import cache
 
 
 @cache

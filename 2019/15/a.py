@@ -1,8 +1,10 @@
 #! /usr/bin/env python3
 
 from functools import cache
-from utils.intcode import Computer
+
 import networkx as nx
+
+from utils.intcode import Computer
 
 N, S, W, E = 1, 2, 3, 4
 

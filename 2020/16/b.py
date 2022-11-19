@@ -1,8 +1,8 @@
 #! /usr/bin/env python3
 
-from collections import defaultdict
 import math
 import re
+from collections import defaultdict
 
 
 def solve(data: str):

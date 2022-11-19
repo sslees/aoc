@@ -1,5 +1,5 @@
-from a import solve
 import pytest
+from a import solve
 
 
 def test1():

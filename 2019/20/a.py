@@ -1,8 +1,9 @@
 #! /usr/bin/env python3
 
-from collections import defaultdict
-import networkx as nx
 import re
+from collections import defaultdict
+
+import networkx as nx
 
 
 def solve(data: str):

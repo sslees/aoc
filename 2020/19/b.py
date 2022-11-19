@@ -1,8 +1,8 @@
 #! /usr/bin/env python3
 
+import re
 from functools import cache
 from itertools import product
-import re
 
 rules = {}
 msgs = None

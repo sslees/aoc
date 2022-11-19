@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
-from parse import parse
 import aocd
+from parse import parse
 
 
 def solve(data: str):

@@ -1,8 +1,9 @@
 #! /usr/bin/env python3
 
 from collections import defaultdict
-from utils.intcode import Computer
+
 import utils.ocr as ocr
+from utils.intcode import Computer
 
 
 class Robot:

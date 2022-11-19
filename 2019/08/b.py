@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 from textwrap import wrap
+
 import utils.ocr as ocr
 
 

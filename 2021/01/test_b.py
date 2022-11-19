@@ -1,5 +1,5 @@
-from b import solve
 import pytest
+from b import solve
 
 
 def test1():

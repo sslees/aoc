@@ -1,8 +1,9 @@
 #! /usr/bin/env python3
 
-from itertools import count, product
-import networkx as nx
 import re
+from itertools import count, product
+
+import networkx as nx
 
 
 def solve(data: str):

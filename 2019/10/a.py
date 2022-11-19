@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
-from collections import namedtuple
 import math
+from collections import namedtuple
 
 
 def visible(loc, locs):

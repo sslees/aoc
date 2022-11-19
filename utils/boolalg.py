@@ -1,6 +1,6 @@
+import math
 from collections import defaultdict
 from itertools import product
-import math
 
 
 def combine(rep1, rep2):

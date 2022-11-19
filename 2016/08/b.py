@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 from parse import parse
+
 import utils.ocr as ocr
 
 

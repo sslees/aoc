@@ -1,9 +1,10 @@
 #! /usr/bin/env python3
 
-from collections import deque
-from utils.intcode import Computer
 import random
 import re
+from collections import deque
+
+from utils.intcode import Computer
 
 AVOID = "escape pod", "giant electromagnet", "infinite loop", "molten lava", "photons"
 REV = {"north": "south", "east": "west", "south": "north", "west": "east", None: None}

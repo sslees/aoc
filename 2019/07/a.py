@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 from itertools import permutations
+
 from utils.intcode import Computer
 
 
