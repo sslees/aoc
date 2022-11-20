@@ -29,4 +29,4 @@ if __name__ == "__main__":
         data = f.read().rstrip("\r\n")
     answer = solve(data)
     print(answer)
-    # aocd.submit(answer, part="p", day=d, year=yyyy)
+    # aocd.submit(answer, part="a", day=D, year=YYYY)

@@ -1,15 +1,13 @@
 #! /bin/bash
 
-if ! type -P aocd > /dev/null
-then
+if ! type -P aocd > /dev/null; then
     echo "mkaoc: command not found: aocd"
     exit 1
 fi
 
-if [ $# -ne 2 ]
-then
+if [ $# -ne 2 ]; then
     echo "usage: mkaoc YYYY DD"
-    exit 1
+    exit 2
 fi
 
 AOC=~/code/python/aoc
@@ -21,20 +19,21 @@ TEMPLATES=$AOC/extras/templates
 python3 -m webbrowser https://adventofcode.com/$YEAR/day/$DAY > /dev/null
 mkdir -p $DEST
 if [ ! -f $DEST/a.py ]; then
-    cp $TEMPLATES/p.py $DEST/a.py;
-    sed -i "s/part=\"p\", day=d, year=yyyy/part=\"a\", day=$DAY, year=$YEAR/" $DEST/a.py;
+    cp $TEMPLATES/a.py $DEST
+    sed -i "s/D, year=YYYY/$DAY, year=$YEAR/" $DEST/a.py
+    if [ ! -f $DEST/test_a.py ]; then
+        cp $TEMPLATES/test_a.py $DEST
+    fi
+    code -r $AOC $DEST/test_a.py $DEST/a.py $DEST/input.txt
+elif [ ! -f $DEST/b.py ]; then
+    cp $DEST/a.py $DEST/b.py
+    sed -i "s/aocd.submit(answer, part=\"a/# aocd.submit(answer, part=\"b/" $DEST/b.py
+    if [ ! -f $DEST/test_b.py ]; then
+        cp $DEST/test_a.py $DEST/test_b.py
+        sed -i "s/from a import/from b import/" $DEST/test_b.py
+    fi
+    code -r $AOC $DEST/test_b.py $DEST/b.py $DEST/input.txt
 fi
-if [ ! -f $DEST/b.py ]; then
-    cp $TEMPLATES/p.py $DEST/b.py;
-    sed -i "s/part=\"p\", day=d, year=yyyy/part=\"b\", day=$DAY, year=$YEAR/" $DEST/b.py;
+if [ ! -f $DEST/input.txt ]; then
+    aocd $DAY $YEAR > $DEST/input.txt
 fi
-if [ ! -f $DEST/test_a.py ]; then
-    cp $TEMPLATES/test_p.py $DEST/test_a.py;
-    sed -i "s/from p import/from a import/" $DEST/test_a.py;
-fi
-if [ ! -f $DEST/test_b.py ]; then
-    cp $TEMPLATES/test_p.py $DEST/test_b.py;
-    sed -i "s/from p import/from b import/" $DEST/test_b.py;
-fi
-code -r $AOC $DEST/test_a.py $DEST/a.py $DEST/input.txt
-if [ ! -f $DEST/input.txt ]; then aocd $DAY $YEAR > $DEST/input.txt; fi

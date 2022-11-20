@@ -1,5 +1,5 @@
 import pytest
-from p import solve
+from a import solve
 
 '''
 def test1():
