@@ -12,13 +12,16 @@ from parse import parse
 
 
 def solve(data: str):
-    [int(c) for c in data]
-    [int(l) for l in data.splitlines()]
-    [int(s) for s in data.split(",")]
-
+    # for i in [int(c) for c in data]:
+    # for i in [int(s) for s in data.split(",")]:
+    # for i in [int(l) for l in data.splitlines()]:
+    # for c in data:
+    # for s in data.split(","):
     for l in data.splitlines():
-        print(l)
-    return 0
+        # string_int_float = parse("{}, {:d}, {:f}", l)
+        # print(string_int_float)
+        pass
+    return
 
 
 if __name__ == "__main__":

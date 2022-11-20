@@ -1,18 +1,18 @@
 import pytest
 from p import solve
 
-
+'''
 def test1():
     assert solve("""example1""") == None
 
 
-# def test2():
-#     assert solve("""example2""") == None
+def test2():
+    assert solve("""example2""") == None
 
 
-# def test3():
-#     assert solve("""example3""") == None
-
+def test3():
+    assert solve("""example3""") == None
+'''
 
 if __name__ == "__main__":
     pytest.main([__file__])
