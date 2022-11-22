@@ -16,9 +16,9 @@ DAY=$(($2))
 DEST="$AOC/$1/$2"
 TEMPLATES=$AOC/extras/templates
 
-python3 -m webbrowser https://adventofcode.com/$YEAR/day/$DAY > /dev/null
 mkdir -p $DEST
 if [ ! -f $DEST/a.py ]; then
+    python3 -m webbrowser https://adventofcode.com/$YEAR/day/$DAY > /dev/null
     cp $TEMPLATES/a.py $DEST
     sed -i "s/D, year=YYYY/$DAY, year=$YEAR/" $DEST/a.py
     if [ ! -f $DEST/test_a.py ]; then
