@@ -3,28 +3,13 @@
 import aocd
 
 
-class Fish:
-    def __init__(self, timer):
-        self.timer = timer
-
-    def next(self):
-        if self.timer == 0:
-            self.timer = 6
-            return Fish(8)
-        else:
-            self.timer -= 1
-            return None
-
-
 def solve(data: str):
-    fish = []
-    for i in [int(s) for s in data.split(",")]:
-        fish.append(Fish(i))
+    fish = [int(s) for s in data.split(",")]
     for _ in range(80):
-        for f in reversed(fish):
-            f2 = f.next()
-            if f2 is not None:
-                fish.append(f2)
+        for i in reversed(range(len(fish))):
+            if fish[i] == 0:
+                fish.append(8)
+            fish[i] += -1 if fish[i] else 6
     return len(fish)
 
 
