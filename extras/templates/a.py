@@ -3,6 +3,7 @@
 import math
 import random
 import re
+import statistics
 from collections import Counter, defaultdict, deque, namedtuple
 from functools import cache
 from itertools import combinations, count, cycle, permutations, product, repeat
