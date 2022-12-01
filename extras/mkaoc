@@ -11,8 +11,8 @@ if [ $# -ne 2 ]; then
 fi
 
 AOC=~/code/python/aoc
-YEAR=$(($1))
-DAY=$(($2))
+YEAR=$((10#$1))
+DAY=$((10#$2))
 DEST="$AOC/$1/$2"
 TEMPLATES=$AOC/extras/templates
 
