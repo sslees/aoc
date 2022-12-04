@@ -17,7 +17,12 @@ setup(
         "Programming Language :: Python :: 3",
         "Topic :: Games/Entertainment :: Puzzle Games",
     ],
-    install_requires=["advent-of-code-data >= 1.2", "networkx", "parse"],
+    install_requires=[
+        "advent-of-code-data >= 1.2.3",
+        "more-itertools",
+        "networkx",
+        "parse",
+    ],
     extras_require={
         "dev": ["black", "line_profiler", "pylint", "rope"],
         "test": ["pytest"],
