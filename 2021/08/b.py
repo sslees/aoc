@@ -38,7 +38,7 @@ def solve(data: str):
                     key[s] = "c"
             else:
                 key[s] = SEGFRQ[n]
-        disps = [DIGITS["".join(sorted(map(key.get, d)))] for d in digs]  # type: ignore
+        disps = [DIGITS["".join(sorted(map(key.get, d)))] for d in digs]
         total += int("".join(disps))
     return total
 
