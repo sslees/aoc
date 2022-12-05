@@ -2,15 +2,15 @@ from collections import namedtuple
 
 
 def sin(angle):
-    assert not angle % 90
+    assert angle % 90 == 0
     angle %= 360
     return 1 if angle == 90 else -1 if angle == 270 else 0
 
 
 def cos(angle):
-    assert not angle % 90
+    assert angle % 90 == 0
     angle %= 360
-    return 1 if not angle else -1 if angle == 180 else 0
+    return 1 if angle == 0 else -1 if angle == 180 else 0
 
 
 class Point2D(namedtuple("Point2D", ("x", "y"))):
@@ -18,9 +18,9 @@ class Point2D(namedtuple("Point2D", ("x", "y"))):
 
     @property
     def hypot(self):
-        return (self.x ** 2 + self.y ** 2) ** 0.5
+        return (self.x**2 + self.y**2) ** 0.5
 
-    def translate(self, dx, dy, dz):
+    def translate(self, dx, dy):
         return Point2D(self.x + dx, self.y + dy)
 
     def rotate(self, rz):
@@ -34,7 +34,7 @@ class Point3D(namedtuple("Point3D", ("x", "y", "z"))):
 
     @property
     def hypot(self):
-        return (self.x ** 2 + self.y ** 2 + self.z ** 2) ** 0.5
+        return (self.x**2 + self.y**2 + self.z**2) ** 0.5
 
     def translate(self, dx, dy, dz):
         return Point3D(self.x + dx, self.y + dy, self.z + dz)
