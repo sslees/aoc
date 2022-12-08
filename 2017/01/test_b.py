@@ -2,23 +2,23 @@ import pytest
 from b import solve
 
 
-def test1():
+def test_example_1():
     assert solve("1212") == 6
 
 
-def test2():
+def test_example_2():
     assert solve("1221") == 0
 
 
-def test3():
+def test_example_3():
     assert solve("123425") == 4
 
 
-def test4():
+def test_example_4():
     assert solve("123123") == 12
 
 
-def test5():
+def test_example_5():
     assert solve("12131415") == 4
 
 

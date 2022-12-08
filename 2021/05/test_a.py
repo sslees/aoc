@@ -2,7 +2,7 @@ import pytest
 from a import solve
 
 
-def test1():
+def test_example_1():
     assert (
         solve(
             """0,9 -> 5,9

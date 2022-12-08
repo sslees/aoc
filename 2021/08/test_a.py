@@ -2,7 +2,7 @@ import pytest
 from a import solve
 
 
-def test1():
+def test_example_1():
     assert (
         solve(
             """be cfbegad cbdgef fgaecd cgeb fdcge agebfd fecdb fabcd edb | fdgacbe cefdb cefbgd gcbe

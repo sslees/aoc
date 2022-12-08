@@ -2,7 +2,7 @@ import pytest
 from b import solve
 
 
-def test1():
+def test_example_1():
     assert (
         solve(
             """forward 5

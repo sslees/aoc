@@ -2,23 +2,23 @@ import pytest
 from b import solve
 
 
-def test1():
+def test_example_1():
     assert solve("""mjqjpqmgbljsphdztnvjfqwrcgsmlb""") == 19
 
 
-def test2():
+def test_example_2():
     assert solve("""bvwbjplbgvbhsrlpgdmjqwftvncz""") == 23
 
 
-def test3():
+def test_example_3():
     assert solve("""nppdvjthqldpwncqszvftbrmjlhg""") == 23
 
 
-def test4():
+def test_example_4():
     assert solve("""nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg""") == 29
 
 
-def test5():
+def test_example_5():
     assert solve("""zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw""") == 26
 
 

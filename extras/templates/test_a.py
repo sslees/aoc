@@ -2,15 +2,15 @@ import pytest
 from a import solve
 
 '''
-def test1():
+def test_example_1():
     assert solve("""example1""") == None
 
 
-def test2():
+def test_example_2():
     assert solve("""example2""") == None
 
 
-def test3():
+def test_example_3():
     assert solve("""example3""") == None
 '''
 
