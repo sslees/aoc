@@ -19,7 +19,7 @@ K)L
 K)YOU
 I)SAN"""
         )
-        == None
+        == 4
     )
 
 

@@ -1,37 +1,8 @@
 import pytest
-from a import solve
+from b import solve
 
 
 def test_example_1():
-    assert (
-        solve(
-            """10 ORE => 10 A
-1 ORE => 1 B
-7 A, 1 B => 1 C
-7 A, 1 C => 1 D
-7 A, 1 D => 1 E
-7 A, 1 E => 1 FUEL"""
-        )
-        == 31
-    )
-
-
-def test_example_2():
-    assert (
-        solve(
-            """9 ORE => 2 A
-8 ORE => 3 B
-7 ORE => 5 C
-3 A, 4 B => 1 AB
-5 B, 7 C => 1 BC
-4 C, 1 A => 1 CA
-2 AB, 3 BC, 4 CA => 1 FUEL"""
-        )
-        == 165
-    )
-
-
-def test_example_3():
     assert (
         solve(
             """157 ORE => 5 NZVS
@@ -44,11 +15,11 @@ def test_example_3():
 165 ORE => 2 GPVTF
 3 DCFZ, 7 NZVS, 5 HKGWZ, 10 PSHF => 8 KHKGT"""
         )
-        == 13_312
+        == 82_892_753
     )
 
 
-def test_example_4():
+def test_example_2():
     assert (
         solve(
             """2 VPVL, 7 FWMGM, 2 CXFTF, 11 MNCFX => 1 STKFG
@@ -64,11 +35,11 @@ def test_example_4():
 1 VJHF, 6 MNCFX => 4 RFSQX
 176 ORE => 6 VJHF"""
         )
-        == 180_697
+        == 5_586_022
     )
 
 
-def test_example_5():
+def test_example_3():
     assert (
         solve(
             """171 ORE => 8 CNZTR
@@ -89,7 +60,7 @@ def test_example_5():
 7 XCVML => 6 RJRHP
 5 BHXH, 4 VRPVC => 5 LTCX"""
         )
-        == 2_210_736
+        == 460_664
     )
 
 

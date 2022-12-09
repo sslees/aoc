@@ -5,21 +5,6 @@ from b import solve
 def test_example_1():
     assert (
         solve(
-            """#######
-#a.#Cd#
-##@#@##
-#######
-##@#@##
-#cB#Ab#
-#######"""
-        )
-        == None
-    )
-
-
-def test_example_2():
-    assert (
-        solve(
             """###############
 #d.ABC.#.....a#
 ######@#@######
@@ -28,11 +13,11 @@ def test_example_2():
 #b.....#.....c#
 ###############"""
         )
-        == None
+        == 24
     )
 
 
-def test_example_3():
+def test_example_2():
     assert (
         solve(
             """#############
@@ -43,11 +28,11 @@ def test_example_3():
 #fEbA.#.FgHi#
 #############"""
         )
-        == None
+        == 32
     )
 
 
-def test_example_4():
+def test_example_3():
     assert (
         solve(
             """#############
@@ -60,7 +45,7 @@ def test_example_4():
 #o#m..#i#jk.#
 #############"""
         )
-        == None
+        == 72
     )
 
 

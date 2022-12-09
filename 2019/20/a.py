@@ -8,6 +8,8 @@ import networkx as nx
 
 def solve(data: str):
     data = data.splitlines()
+    w = max(len(l) for l in data)
+    data = [l.ljust(w) for l in data]
     maze = nx.Graph()
     for r, line in enumerate(data):
         for c, ch in enumerate(line):

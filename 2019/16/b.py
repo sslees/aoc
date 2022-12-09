@@ -10,7 +10,7 @@ def solve(data: str):
     signal = reversed(list(islice(cycle(data), offset, len(data) * 10_000)))
     for _ in range(100):
         signal = map(mod, accumulate(signal), repeat(10))
-    return "".join(map(str, list(signal)[-1:-9:-1]))
+    return int("".join(map(str, list(signal)[-1:-9:-1])))
 
 
 if __name__ == "__main__":

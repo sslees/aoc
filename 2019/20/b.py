@@ -1,13 +1,15 @@
 #! /usr/bin/env python3
 
 import re
-from itertools import count, product
+from itertools import count
 
 import networkx as nx
 
 
 def solve(data: str):
     data = data.splitlines()
+    w = max(len(l) for l in data)
+    data = [l.ljust(w) for l in data]
     base = nx.Graph()
     for r, line in enumerate(data):
         for c, ch in enumerate(line):
@@ -52,9 +54,7 @@ def solve(data: str):
                 maze.add_edge((depth - 1, inner[lbl]), (depth, outer[lbl]), weight=1)
         try:
             edge = (0, outer["AA"]), (0, outer["ZZ"])
-            len = nx.shortest_path_length(maze, *edge, "weight")
-            return len
-            break
+            return nx.shortest_path_length(maze, *edge, "weight")
         except:
             pass
 

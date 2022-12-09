@@ -14,7 +14,7 @@ def solve(data: str):
     data = [int(c) for c in data]
     for _ in range(100):
         data = [abs(sum(map(mul, data, pattern(i)))) % 10 for i in range(len(data))]
-    return "".join(map(str, data[:8]))
+    return int("".join(map(str, data[:8])))
 
 
 if __name__ == "__main__":
