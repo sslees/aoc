@@ -19,7 +19,7 @@ def solve(data: str):
         if state in states:
             break
         states.add(state)
-    return sum(2 ** i for i, ch in enumerate(state.replace("\n", "")) if ch == "#")
+    return sum(2**i for i, ch in enumerate(state.replace("\n", "")) if ch == "#")
 
 
 if __name__ == "__main__":

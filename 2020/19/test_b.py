@@ -3,7 +3,9 @@ from b import solve
 
 
 def test_example_1():
-    assert solve("""42: 9 14 | 10 1
+    assert (
+        solve(
+            """42: 9 14 | 10 1
 9: 14 27 | 1 26
 10: 23 14 | 28 1
 1: "a"
@@ -49,7 +51,10 @@ aaaaabbaabaaaaababaa
 aaaabbaaaabbaaa
 aaaabbaabbaaaaaaabbbabbbaaabbaabaaa
 babaaabbbaaabaababbaabababaaab
-aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba""") == None
+aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba"""
+        )
+        == None
+    )
 
 
 if __name__ == "__main__":

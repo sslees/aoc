@@ -3,7 +3,9 @@ from a import solve
 
 
 def test_example_1():
-    assert solve("""Tile 2311:
+    assert (
+        solve(
+            """Tile 2311:
 ..##.#..#.
 ##..#.....
 #...##..#.
@@ -109,7 +111,10 @@ Tile 3079:
 #.#####.##
 ..#.###...
 ..#.......
-..#.###...""") == None
+..#.###..."""
+        )
+        == None
+    )
 
 
 if __name__ == "__main__":

@@ -3,7 +3,9 @@ from a import solve
 
 
 def test_example_1():
-    assert solve("""16
+    assert (
+        solve(
+            """16
 10
 15
 5
@@ -13,11 +15,16 @@ def test_example_1():
 19
 6
 12
-4""") == None
+4"""
+        )
+        == None
+    )
 
 
 def test_example_2():
-    assert solve("""28
+    assert (
+        solve(
+            """28
 33
 18
 42
@@ -47,7 +54,10 @@ def test_example_2():
 2
 34
 10
-3""") == None
+3"""
+        )
+        == None
+    )
 
 
 if __name__ == "__main__":

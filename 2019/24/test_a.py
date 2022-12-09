@@ -3,11 +3,16 @@ from a import solve
 
 
 def test_example_1():
-    assert solve("""....#
+    assert (
+        solve(
+            """....#
 #..#.
 #..##
 ..#..
-#....""") == None
+#...."""
+        )
+        == None
+    )
 
 
 if __name__ == "__main__":

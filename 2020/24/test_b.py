@@ -3,7 +3,9 @@ from b import solve
 
 
 def test_example_1():
-    assert solve("""sesenwnenenewseeswwswswwnenewsewsw
+    assert (
+        solve(
+            """sesenwnenenewseeswwswswwnenewsewsw
 neeenesenwnwwswnenewnwwsewnenwseswesw
 seswneswswsenwwnwse
 nwnwneseeswswnenewneswwnewseswneseene
@@ -22,7 +24,10 @@ wnwnesenesenenwwnenwsewesewsesesew
 nenewswnwewswnenesenwnesewesw
 eneswnwswnwsenenwnwnwwseeswneewsenese
 neswnwewnwnwseenwseesewsenwsweewe
-wseweeenwnesenwwwswnew""") == None
+wseweeenwnesenwwwswnew"""
+        )
+        == None
+    )
 
 
 if __name__ == "__main__":

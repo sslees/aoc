@@ -3,9 +3,14 @@ from b import solve
 
 
 def test_example_1():
-    assert solve("""14
+    assert (
+        solve(
+            """14
 1969
-100756""") == None
+100756"""
+        )
+        == None
+    )
 
 
 if __name__ == "__main__":

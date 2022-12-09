@@ -3,7 +3,9 @@ from b import solve
 
 
 def test_example_1():
-    assert solve("""COM)B
+    assert (
+        solve(
+            """COM)B
 B)C
 C)D
 D)E
@@ -15,7 +17,10 @@ E)J
 J)K
 K)L
 K)YOU
-I)SAN""") == None
+I)SAN"""
+        )
+        == None
+    )
 
 
 if __name__ == "__main__":

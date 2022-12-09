@@ -3,37 +3,54 @@ from b import solve
 
 
 def test_example_1():
-    assert solve("""#######
+    assert (
+        solve(
+            """#######
 #a.#Cd#
 ##@#@##
 #######
 ##@#@##
 #cB#Ab#
-#######""") == None
+#######"""
+        )
+        == None
+    )
 
 
 def test_example_2():
-    assert solve("""###############
+    assert (
+        solve(
+            """###############
 #d.ABC.#.....a#
 ######@#@######
 ###############
 ######@#@######
 #b.....#.....c#
-###############""") == None
+###############"""
+        )
+        == None
+    )
 
 
 def test_example_3():
-    assert solve("""#############
+    assert (
+        solve(
+            """#############
 #DcBa.#.GhKl#
 #.###@#@#I###
 #e#d#####j#k#
 ###C#@#@###J#
 #fEbA.#.FgHi#
-#############""") == None
+#############"""
+        )
+        == None
+    )
 
 
 def test_example_4():
-    assert solve("""#############
+    assert (
+        solve(
+            """#############
 #g#f.D#..h#l#
 #F###e#E###.#
 #dCba@#@BcIJ#
@@ -41,7 +58,10 @@ def test_example_4():
 #nK.L@#@G...#
 #M###N#H###.#
 #o#m..#i#jk.#
-#############""") == None
+#############"""
+        )
+        == None
+    )
 
 
 if __name__ == "__main__":

@@ -3,9 +3,14 @@ from a import solve
 
 
 def test_example_1():
-    assert solve("""BFFFBBFRRR
+    assert (
+        solve(
+            """BFFFBBFRRR
 FFFBBBFRRR
-BBFFBBFRLL""") == None
+BBFFBBFRLL"""
+        )
+        == None
+    )
 
 
 if __name__ == "__main__":

@@ -3,8 +3,13 @@ from b import solve
 
 
 def test_example_1():
-    assert solve("""939
-7,13,x,x,59,x,31,19""") == None
+    assert (
+        solve(
+            """939
+7,13,x,x,59,x,31,19"""
+        )
+        == None
+    )
 
 
 def test_example_2():

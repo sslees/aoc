@@ -3,7 +3,9 @@ from a import solve
 
 
 def test_example_1():
-    assert solve("""Player 1:
+    assert (
+        solve(
+            """Player 1:
 9
 2
 6
@@ -15,7 +17,10 @@ Player 2:
 8
 4
 7
-10""") == None
+10"""
+        )
+        == None
+    )
 
 
 if __name__ == "__main__":
