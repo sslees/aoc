@@ -26,7 +26,7 @@ def dist(a, b):
     return max(abs(b[0] - a[0]), abs(b[1] - a[1]))
 
 
-def mhd(a, b):
+def manhattan(a, b):
     return abs(b[0] - a[0]) + abs(b[1] - a[1])
 
 
@@ -39,7 +39,7 @@ def solve(data: str):
         for _ in range(n):
             head = add(head, MOVES[d])
             if dist(head, tail) > 1:
-                tail = min(nbrs(tail), key=lambda nbr: mhd(head, nbr))
+                tail = min(nbrs(tail), key=lambda nbr: manhattan(head, nbr))
                 locs.add(tail)
     return len(locs)
 

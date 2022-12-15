@@ -26,7 +26,7 @@ def dist(a, b):
     return max(abs(b[0] - a[0]), abs(b[1] - a[1]))
 
 
-def mhd(a, b):
+def manhattan(a, b):
     return abs(b[0] - a[0]) + abs(b[1] - a[1])
 
 
@@ -41,7 +41,7 @@ def solve(data: str):
                 head = knots[i]
                 tail = knots[i + 1]
                 if dist(head, tail) > 1:
-                    tail = min(nbrs(tail), key=lambda nbr: mhd(head, nbr))
+                    tail = min(nbrs(tail), key=lambda nbr: manhattan(head, nbr))
                     knots[i + 1] = tail
                 if i == 8:
                     locs.add(tail)
