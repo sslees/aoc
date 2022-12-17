@@ -9,6 +9,7 @@ from functools import cache
 from itertools import combinations, count, cycle, permutations, product, repeat
 
 import aocd
+import networkx as nx
 from parse import parse
 
 
