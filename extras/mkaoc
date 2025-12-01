@@ -15,10 +15,15 @@ YEAR=$((10#$1))
 DAY=$((10#$2))
 DEST="$AOC/$1/$2"
 TEMPLATES=$AOC/extras/templates
+TZ=America/New_York
 
 mkdir -p $DEST
 if [ ! -f $DEST/a.py ]; then
-    python3 -m webbrowser https://adventofcode.com/$YEAR/day/$DAY > /dev/null
+    # if [[ $YEAR -lt $(TZ=$TZ date +%Y) || [[ $(TZ=$TZ date +%m) -eq 12 && $DAY -le $(TZ=$TZ date +%d) ]] ]]; then
+    #     python3 -m webbrowser https://adventofcode.com/$YEAR/day/$DAY > /dev/null
+    # else
+    #     python3 -m webbrowser https://adventofcode.com/$YEAR > /dev/null
+    # fi
     cp $TEMPLATES/a.py $DEST
     sed -i "s/D, year=YYYY/$DAY, year=$YEAR/" $DEST/a.py
     if [ ! -f $DEST/test_a.py ]; then
@@ -35,5 +40,7 @@ elif [ ! -f $DEST/b.py ]; then
     code -r $AOC $DEST/test_b.py $DEST/b.py $DEST/input.txt
 fi
 if [ ! -f $DEST/input.txt ]; then
-    aocd $DAY $YEAR > $DEST/input.txt
+    # if [[ $YEAR -lt $(TZ=$TZ date +%Y) || [[ $(TZ=$TZ date +%m) -eq 12 && $DAY -le $(TZ=$TZ date +%d) ]] ]]; then
+        aocd $DAY $YEAR > $DEST/input.txt
+    # fi
 fi

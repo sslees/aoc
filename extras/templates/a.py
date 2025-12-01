@@ -6,7 +6,15 @@ import re
 import statistics
 from collections import Counter, defaultdict, deque, namedtuple
 from functools import cache
-from itertools import combinations, count, cycle, permutations, product, repeat
+from itertools import (
+    combinations,
+    count,
+    cycle,
+    pairwise,
+    permutations,
+    product,
+    repeat,
+)
 
 import aocd
 import networkx as nx
