@@ -14,26 +14,29 @@ from itertools import (
     permutations,
     product,
     repeat,
-    zip_longest,
 )
 
-import aocd
+from utils.grid import defaultgrid
 
+import aocd
 import networkx as nx
 from parse import parse
 
+MOORE = lambda dimension=2: [p for p in product((-1, 0, 1), repeat=dimension) if any(p)]
+
+
+def neighbors(cell):
+    return [tuple(map(sum, zip(cell, d))) for d in MOORE()]
+
 
 def solve(data: str):
-    # for i in [int(c) for c in data]:
-    # for i in [int(s) for s in data.split(",")]:
-    # for i in [int(l) for l in data.splitlines()]:
-    # for c in data:
-    # for s in data.split(","):
-    for l in data.splitlines():
-        # string_int_float = parse("{}, {:d}, {:f}", l)
-        # print(string_int_float)
-        pass
-    return
+    grid = defaultgrid(data)
+    movable = 0
+    for cell in list(grid):
+        if grid[cell] == "@":
+            if len([n for n in neighbors(cell) if grid[n] == "@"]) < 4:
+                movable += 1
+    return movable
 
 
 if __name__ == "__main__":
@@ -41,4 +44,4 @@ if __name__ == "__main__":
         data = f.read().rstrip("\r\n")
     answer = solve(data)
     print(answer)
-    # aocd.submit(answer, part="a", day=D, year=YYYY)
+    aocd.submit(answer, part="a", day=4, year=2025)

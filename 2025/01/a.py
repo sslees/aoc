@@ -14,26 +14,30 @@ from itertools import (
     permutations,
     product,
     repeat,
-    zip_longest,
 )
 
 import aocd
-
 import networkx as nx
 from parse import parse
 
 
 def solve(data: str):
-    # for i in [int(c) for c in data]:
-    # for i in [int(s) for s in data.split(",")]:
-    # for i in [int(l) for l in data.splitlines()]:
-    # for c in data:
-    # for s in data.split(","):
+    pos = 50
+    zeros = 0
     for l in data.splitlines():
-        # string_int_float = parse("{}, {:d}, {:f}", l)
-        # print(string_int_float)
-        pass
-    return
+        dir = l[0]
+        num = int(l[1:])
+        if dir == "L":
+            pos += num
+            pos += 200
+            pos %= 100
+        else:
+            pos -= num
+            pos += 200
+            pos %= 100
+        if pos == 0:
+            zeros += 1
+    return zeros
 
 
 if __name__ == "__main__":
@@ -41,4 +45,4 @@ if __name__ == "__main__":
         data = f.read().rstrip("\r\n")
     answer = solve(data)
     print(answer)
-    # aocd.submit(answer, part="a", day=D, year=YYYY)
+    aocd.submit(answer, part="a", day=1, year=2025)

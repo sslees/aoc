@@ -19,21 +19,21 @@ from itertools import (
 
 import aocd
 
-import networkx as nx
+# import networkx as nx
 from parse import parse
 
 
+def area(pair):
+    (ax, ay), (bx, by) = pair
+    return (abs(bx - ax) + 1) * (abs(by - ay) + 1)
+
+
 def solve(data: str):
-    # for i in [int(c) for c in data]:
-    # for i in [int(s) for s in data.split(",")]:
-    # for i in [int(l) for l in data.splitlines()]:
-    # for c in data:
-    # for s in data.split(","):
-    for l in data.splitlines():
-        # string_int_float = parse("{}, {:d}, {:f}", l)
-        # print(string_int_float)
-        pass
-    return
+    corners = [tuple(parse("{:d},{:d}", l)) for l in data.splitlines()]
+    # print(corners)
+    # for pair in combinations(corners, 2):
+    #     print(pair, area(pair))
+    return max(area(pair) for pair in combinations(corners, 2))
 
 
 if __name__ == "__main__":
@@ -41,4 +41,4 @@ if __name__ == "__main__":
         data = f.read().rstrip("\r\n")
     answer = solve(data)
     print(answer)
-    # aocd.submit(answer, part="a", day=D, year=YYYY)
+    aocd.submit(answer, part="a", day=9, year=2025)

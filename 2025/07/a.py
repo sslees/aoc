@@ -19,21 +19,22 @@ from itertools import (
 
 import aocd
 
-import networkx as nx
+# import networkx as nx
 from parse import parse
 
 
 def solve(data: str):
-    # for i in [int(c) for c in data]:
-    # for i in [int(s) for s in data.split(",")]:
-    # for i in [int(l) for l in data.splitlines()]:
-    # for c in data:
-    # for s in data.split(","):
-    for l in data.splitlines():
-        # string_int_float = parse("{}, {:d}, {:f}", l)
-        # print(string_int_float)
-        pass
-    return
+    beams = {data.splitlines()[0].index("S")}
+    splits = 0
+    for l in data.splitlines()[1:]:
+        for i, c in enumerate(l):
+            if c == "^":
+                if i in beams:
+                    beams.remove(i)
+                    beams.add(i + 1)
+                    beams.add(i - 1)
+                    splits += 1
+    return splits
 
 
 if __name__ == "__main__":
@@ -41,4 +42,4 @@ if __name__ == "__main__":
         data = f.read().rstrip("\r\n")
     answer = solve(data)
     print(answer)
-    # aocd.submit(answer, part="a", day=D, year=YYYY)
+    aocd.submit(answer, part="a", day=7, year=2025)

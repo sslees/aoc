@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling >= 1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aoc-sslees"
+description = "Advent of Code solutions by sslees."
+authors = [
+  {name = "Sam Lees", email = "sam@sslees.com"}
+]
+maintainers = [
+  {name = "Sam Lees", email = "sam@sslees.com"}
+]
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+keywords = [
+  "advent-of-code",
+  "aoc",
+  "coding-challenges",
+  "competitive-programming",
+  "programming-puzzles",
+]
+version = "0.1.0"
+requires-python = ">= 3.12"
+dependencies = [
+  "advent-of-code-data >= 2.0.0",
+  "more-itertools",
+  "networkx",
+  "parse",
+]
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Education",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Private :: Do Not Upload",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python",
+  "Topic :: Education",
+  "Topic :: Games/Entertainment :: Puzzle Games",
+  "Typing :: Typed",
+]
+
+[project.urls]
+source = "https://github.com/sslees/aoc"
+
+[project.optional-dependencies]
+dev = ["black", "line_profiler", "pylint", "rope"]
+test = ["pytest"]
+
+[project.entry-points."adventofcode.user"]
+sslees = "extras.plugins:solve"
+
+[project.scripts]
+# mkaoc = "extras/mkaoc" # todo: this is a bash script
+
+# https://packaging.python.org/en/latest/tutorials/packaging-projects/
+# https://chatgpt.com/c/693456e3-d088-832a-99bd-10fb22bb6317

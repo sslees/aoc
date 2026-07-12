@@ -24,16 +24,12 @@ from parse import parse
 
 
 def solve(data: str):
-    # for i in [int(c) for c in data]:
-    # for i in [int(s) for s in data.split(",")]:
-    # for i in [int(l) for l in data.splitlines()]:
-    # for c in data:
-    # for s in data.split(","):
+    g = nx.DiGraph()
     for l in data.splitlines():
-        # string_int_float = parse("{}, {:d}, {:f}", l)
-        # print(string_int_float)
-        pass
-    return
+        device, outputs = l.split(": ")
+        for output in outputs.split():
+            g.add_edge(device, output)
+    return len(list(nx.all_simple_paths(g, "you", "out")))
 
 
 if __name__ == "__main__":
@@ -41,4 +37,4 @@ if __name__ == "__main__":
         data = f.read().rstrip("\r\n")
     answer = solve(data)
     print(answer)
-    # aocd.submit(answer, part="a", day=D, year=YYYY)
+    aocd.submit(answer, part="a", day=11, year=2025)
